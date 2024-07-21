@@ -20,4 +20,9 @@ urlpatterns = [
     path('colleges/add/', CreateCollegeView.as_view(), name="add_college"),
     path('colleges/delete/<int:pk>/', DeleteCollegeView.as_view(), name="delete_college"),
     path('colleges/update/<int:pk>/', UpdateCollegeView.as_view(), name="update_college"),
+    # TERMS
+    path('terms/', CollegeTermView.as_view(), name="terms"),
+    path('terms/add/', CreateTermView.as_view(), name="add_term"),
+    path('terms/delete/<int:pk>/', DeleteTermView.as_view(), name="delete_term"),
+    path('terms/update/<int:pk>/', UpdateTermView.as_view(), name="update_term"),
 ]

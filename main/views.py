@@ -14,7 +14,7 @@ from django.contrib.auth import get_user_model
 
 # from hub.models import Download, Source
 
-from .forms import CreateUserForm, CreateCollegeForm
+from .forms import CreateUserForm, CreateCollegeForm, CreateTermForm
 from . import models
 
 
@@ -143,4 +143,38 @@ class UpdateCollegeView(UpdateView):
         
     def get_success_url(self):
         return reverse_lazy('main:colleges') 
+    
+
+# TERMS
+
+class CollegeTermView(ListView):
+    model = models.Term
+    context_object_name = "terms"
+    template_name = "terms/index.html"
+
+
+class CreateTermView(CreateView):
+    model = models.Term    
+    template_name = 'terms/create.html'
+    form_class = CreateTermForm
+    
+    def get_success_url(self):
+        return reverse_lazy('main:terms') 
+    
+
+class DeleteTermView(DeleteView):
+    model = models.Term
+    
+    def get_success_url(self):
+        return reverse_lazy('main:terms') 
+    
+
+class UpdateTermView(UpdateView):
+    model = models.Term
+    template_name = "terms/create.html"
+    form_class = CreateTermForm
+    context_object_name = "term"
+        
+    def get_success_url(self):
+        return reverse_lazy('main:terms') 
     

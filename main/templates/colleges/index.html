@@ -84,7 +84,7 @@
                                             data-bs-toggle="modal"
                                             data-bs-target="#Modal"
                                             data-bs-action="{% url 'main:delete_college' pk=college.id %}"
-                                            data-bs-name="">
+                                            data-bs-name="{{ college.title }}">
                                             حذف
                                         </button>
                                     </td>

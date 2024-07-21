@@ -101,7 +101,7 @@
                                             data-bs-toggle="modal"
                                             data-bs-target="#Modal"
                                             data-bs-action="{% url "main:delete_user" pk=user.id %}"
-                                            data-bs-name="admin">
+                                            data-bs-name="{{ user.username }}">
                                             حذف
                                         </button>
                                     </td>

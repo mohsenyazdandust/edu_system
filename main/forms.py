@@ -24,3 +24,9 @@ class CreateCollegeForm(forms.ModelForm):
         model = College
         fields = ['title']
 
+
+class CreateTermForm(forms.ModelForm):
+    class Meta:
+        model = Term
+        fields = ['title']
+
