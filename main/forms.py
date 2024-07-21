@@ -9,7 +9,7 @@ from .models import *
 class CreateUserForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
-        fields = ['first_name', 'access_level', 'username']
+        fields = ['first_name', 'access_level', 'username', 'cgroup', 'college']
         
     def save(self, commit=True):
         user = super().save(commit=False)

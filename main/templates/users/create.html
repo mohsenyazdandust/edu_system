@@ -96,9 +96,11 @@
                                     :</label>
                                 <select class="form-select"
                                     aria-label="Default select example"
-                                    name="collages_id">
+                                    name="college">
                                     <option selected>انتخاب کنید</option>
-                                    <option value="1">دانشکده کل</option>
+                                    {% for college in colleges %}
+                                        <option value="{{ college.id }}" {% if cuser.college.id == college.id %}selected{% endif %} >{{ college.title }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="mb-3">
@@ -106,10 +108,11 @@
                                     :</label>
                                 <select class="form-select"
                                     aria-label="Default select example"
-                                    name="collages_id">
+                                    name="cgroup">
                                     <option selected>انتخاب کنید</option>
-                                    <option value="1">گروه 1</option>
-                                    <option value="2">گروه 2</option>
+                                    {% for group in groups %}
+                                        <option value="{{ group.id }}" {% if cuser.cgroup.id == group.id %}selected{% endif %}>{{ group.title }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <button type="submit"

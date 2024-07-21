@@ -86,12 +86,18 @@ class UserListView(ListView):
 
 
 class CreateUserView(CreateView):
-    model = User    
+    model = User
     template_name = 'users/create.html'
     form_class = CreateUserForm
     
     def get_success_url(self):
         return reverse_lazy('main:users') 
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['groups'] = models.Group.objects.all()
+        context['colleges'] = models.College.objects.all()
+        return context
     
 
 class DeleteUserView(DeleteView):
@@ -110,6 +116,11 @@ class UpdateUserView(UpdateView):
     def get_success_url(self):
         return reverse_lazy('main:users') 
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['groups'] = models.Group.objects.all()
+        context['colleges'] = models.College.objects.all()
+        return context
     
 # COLLEGES
 

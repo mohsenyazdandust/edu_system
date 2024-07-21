@@ -5,7 +5,8 @@ from django.contrib.auth.models import AbstractUser
 
 class CUser(AbstractUser):
     access_level = models.IntegerField(default=0)
-    
+    cgroup = models.ForeignKey('main.Group', on_delete=models.SET_NULL, null=True, blank=True)
+    college = models.ForeignKey('main.College', on_delete=models.SET_NULL, null=True, blank=True)
 
 class Course(models.Model):
     name = models.CharField(max_length=100)
