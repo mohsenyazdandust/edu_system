@@ -1,6 +1,3 @@
-import datetime
-
-from django.db.models import Sum
 from django.shortcuts import redirect
 
 from django.views.generic import CreateView, TemplateView, View, ListView, DeleteView, UpdateView
@@ -10,13 +7,14 @@ from django.contrib.auth import logout as auth_logout, login as auth_login
 from django.contrib.auth.views import LoginView
 
 from django.urls import reverse_lazy
+
 from django.contrib.auth import get_user_model
 
 # from braces.views import AnonymousRequiredMixin, LoginRequiredMixin, StaffuserRequiredMixin
 
 # from hub.models import Download, Source
 
-from .forms import CreateUserForm
+from .forms import CreateUserForm, CreateCollegeForm
 from . import models
 
 
@@ -26,6 +24,9 @@ from django.shortcuts import render
 
 
 User = get_user_model()
+
+
+# AUTH
 
 class LogInView(LoginView):
     redirect_authenticated_user = True
@@ -57,6 +58,9 @@ class ChangePasswordView(View):
         else:
             return redirect(reverse_lazy("main:changepassword"))
 
+
+# DASHBOARD
+
 class DashboardView(TemplateView):
     template_name = "dashboard.html"
     
@@ -71,8 +75,9 @@ class DashboardView(TemplateView):
         context["groups"] = len(models.Group.objects.all())
         
         return context
-    
 
+
+# USERS
 
 class UserListView(ListView):
     model = User
@@ -106,4 +111,36 @@ class UpdateUserView(UpdateView):
         return reverse_lazy('main:users') 
     
     
+# COLLEGES
+
+class CollegeListView(ListView):
+    model = models.College
+    context_object_name = "colleges"
+    template_name = "colleges/index.html"
+
+
+class CreateCollegeView(CreateView):
+    model = models.College    
+    template_name = 'colleges/create.html'
+    form_class = CreateCollegeForm
+    
+    def get_success_url(self):
+        return reverse_lazy('main:colleges') 
+    
+
+class DeleteCollegeView(DeleteView):
+    model = models.College
+    
+    def get_success_url(self):
+        return reverse_lazy('main:colleges') 
+    
+
+class UpdateCollegeView(UpdateView):
+    model = models.College
+    template_name = "colleges/create.html"
+    form_class = CreateCollegeForm
+    context_object_name = "college"
+        
+    def get_success_url(self):
+        return reverse_lazy('main:colleges') 
     

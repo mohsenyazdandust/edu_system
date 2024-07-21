@@ -4,6 +4,8 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
+from .models import *
+
 class CreateUserForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
@@ -15,3 +17,10 @@ class CreateUserForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class CreateCollegeForm(forms.ModelForm):
+    class Meta:
+        model = College
+        fields = ['title']
+
