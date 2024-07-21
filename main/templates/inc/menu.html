@@ -16,6 +16,7 @@
             </a>
         </li>
 
+        {% if user.access_level <= 0 %}
         <li class="mb-1">
             <button
                 class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
@@ -41,7 +42,9 @@
                 </ul>
             </div>
         </li>
+        {% endif %}
 
+        {% if user.access_level <= 0 %}
         <li class="mb-1">
             <button
                 class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
@@ -65,6 +68,7 @@
                 </ul>
             </div>
         </li>
+        {% endif %}
 
         <li class="mb-1">
             <button
@@ -90,7 +94,7 @@
             </div>
         </li>
 
-        <li class="mb-1">
+        {% comment %} <li class="mb-1">
             <button
                 class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                 data-bs-toggle="collapse"
@@ -112,9 +116,9 @@
                     </li>
                 </ul>
             </div>
-        </li>
+        </li> {% endcomment %}
 
-        <li class="mb-1">
+        {% comment %} <li class="mb-1">
             <button
                 class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                 data-bs-toggle="collapse"
@@ -136,9 +140,9 @@
                     </li>
                 </ul>
             </div>
-        </li>
+        </li> {% endcomment %}
 
-        <li class="mb-1">
+        {% comment %} <li class="mb-1">
             <button
                 class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                 data-bs-toggle="collapse"
@@ -160,7 +164,7 @@
                     </li>
                 </ul>
             </div>
-        </li>
+        </li> {% endcomment %}
 
         <li class="mb-1">
             <button
@@ -186,7 +190,7 @@
             </div>
         </li>
 
-        <li class="mb-1">
+        {% comment %} <li class="mb-1">
             <button
                 class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                 data-bs-toggle="collapse"
@@ -208,9 +212,9 @@
                     </li>
                 </ul>
             </div>
-        </li>
+        </li> {% endcomment %}
 
-        <li class="mb-1">
+        {% comment %} <li class="mb-1">
             <button
                 class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                 data-bs-toggle="collapse"
@@ -232,9 +236,9 @@
                             کلاس</a></li>
                 </ul>
             </div>
-        </li>
+        </li> {% endcomment %}
 
-        <li class="mb-1">
+        {% comment %} <li class="mb-1">
             <button
                 class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                 data-bs-toggle="collapse"
@@ -260,17 +264,18 @@
                             مکان کلاس ها</a></li>
                 </ul>
             </div>
-        </li>
+        </li> {% endcomment %}
 
-        <li class="mb-1">
+        {% comment %} <li class="mb-1">
             <a href="./schedule/index.html"
                 class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                 aria-expanded="false">
                 <i class="bi bi-filetype-pdf ms-1"></i>
                 گزارش گیری
             </a>
-        </li>
-        <li class="mb-1">
+        </li> {% endcomment %}
+
+        {% comment %} <li class="mb-1">
             <button
                 class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                 data-bs-toggle="collapse"
@@ -293,7 +298,7 @@
                             گیری تاریخچه</a></li>
                 </ul>
             </div>
-        </li>
+        </li> {% endcomment %}
 
         <li class="border-top my-3"></li>
 
@@ -308,11 +313,11 @@
             <div class="collapse" id="account-collapse">
                 <ul
                     class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="./auth/change-password.html"
+                    <li><a href="{% url 'main:changepassword' %}"
                             class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
                                 class="bi bi-lock"></i>تغییر رمز
                             عبور</a></li>
-                    <li><a href="#"
+                    <li><a href="{% url "main:logout" %}"
                             class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
                                 class="bi bi-door-open"></i>خروج</a>
                     </li>

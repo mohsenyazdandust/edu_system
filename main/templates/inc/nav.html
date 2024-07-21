@@ -5,11 +5,6 @@
             برنامه آموزشی دانشگاه
         </div>
 
-        <div
-            class="d-none d-md-blo%A %d %B %Yck badge badge-lg bg-secondary me-4 fw-normal">
-            1403/4/25 دوشنبه
-        </div>
-
         <button class="navbar-toggler ms-2 ms-sm-0" type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
@@ -26,7 +21,7 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav my-2 my-md-0 me-auto p-0 text-center">
-                <li class="d-none d-md-block nav-item dropdown">
+                {% comment %} <li class="d-none d-md-block nav-item dropdown">
                     <a id="navbarDropdown2"
                         class="nav-link text-white dropdown-toggle"
                         href="#" role="button" data-bs-toggle="dropdown"
@@ -57,14 +52,14 @@
                         <a href="#" class="dropdown-item">دانشکده 1</a>
                         <a href="#" class="dropdown-item">دانشکده 2</a>
                     </div>
-                </li>
+                </li> {% endcomment %}
                 <div class="vr text-white mx-2 d-none d-md-block"></div>
                 <li class="nav-item dropdown text-white nav-link">
                     <i class="bi bi-person"></i>
                     نام کاربری : {{ request.user.username }}
                 </li>
                 <div class="vr text-white mx-2 d-none d-md-block"></div>
-                <li class="d-md-none mb-1">
+                {% comment %} <li class="d-md-none mb-1">
                     <button
                         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                         data-bs-toggle="collapse"
@@ -86,15 +81,93 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> {% endcomment %}
                 <li class="d-md-none mb-1">
-                    <a href="./dashboard.html"
+                    <a href="{% url "main:dashboard" %}"
                         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                         aria-expanded="false">
                         <i class="bi bi-house ms-1"></i>داشبورد
                     </a>
                 </li>
+                {% if user.access_level <= 0 %}
                 <li class="d-md-none mb-1">
+                    <button
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#users-collapse"
+                        aria-expanded="false">
+                        <i class="bi bi-person ms-1"></i> کاربران
+
+                    </button>
+
+                    <div class="collapse" id="users-collapse">
+                        <ul
+                            class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="{% url "main:users" %}"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>همه</a>
+                            </li>
+
+                            <li><a href="{% url 'main:add_user' %}"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>ایجاد</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+
+                {% if user.access_level <= 0 %}
+                <li class="d-md-none mb-1">
+                    <button
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collage-collapse"
+                        aria-expanded="false">
+                        <i class="bi bi-option ms-1"></i>
+                        دانشکده
+                    </button>
+                    <div class="collapse" id="collage-collapse">
+                        <ul
+                            class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="{% url 'main:colleges' %}"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>همه</a>
+                            </li>
+                            <li><a href="{% url 'main:add_college' %}"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>ایجاد</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+                
+                <li class="d-md-none mb-1">
+                    <button
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#terms-collapse"
+                        aria-expanded="false">
+                        <i class="bi bi-calendar ms-1"></i>
+                        ترم ها
+                    </button>
+                    <div class="collapse" id="terms-collapse">
+                        <ul
+                            class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="{% url 'main:terms' %}"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>همه</a>
+                            </li>
+                            <li><a href="{% url 'main:add_term' %}"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>ایجاد</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                
+                {% comment %} <li class="d-md-none mb-1">
                     <button
                         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                         data-bs-toggle="collapse"
@@ -116,8 +189,9 @@
                             </li>
                         </ul>
                     </div>
-                </li>
-                <li class="d-md-none mb-1">
+                </li> {% endcomment %}
+
+                {% comment %} <li class="d-md-none mb-1">
                     <button
                         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                         data-bs-toggle="collapse"
@@ -139,8 +213,9 @@
                             </li>
                         </ul>
                     </div>
-                </li>
-                <li class="d-md-none mb-1">
+                </li> {% endcomment %}
+                
+                {% comment %} <li class="d-md-none mb-1">
                     <button
                         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                         data-bs-toggle="collapse"
@@ -162,7 +237,8 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> {% endcomment %}
+
                 <li class="d-md-none mb-1">
                     <button
                         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
@@ -175,18 +251,19 @@
                     <div class="collapse" id="eg-collapse">
                         <ul
                             class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="./educational-groups/index.html"
+                            <li><a href="{% url "main:groups" %}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
                                         class="bi bi-chevron-left"></i>همه</a>
                             </li>
-                            <li><a href="./educational-groups/create.html"
+                            <li><a href="{% url "main:add_group" %}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
                                         class="bi bi-chevron-left"></i>ایجاد</a>
                             </li>
                         </ul>
                     </div>
                 </li>
-                <li class="d-md-none mb-1">
+
+                {% comment %} <li class="d-md-none mb-1">
                     <button
                         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                         data-bs-toggle="collapse"
@@ -208,8 +285,9 @@
                             </li>
                         </ul>
                     </div>
-                </li>
-                <li class="d-md-none mb-1">
+                </li> {% endcomment %}
+
+                {% comment %} <li class="d-md-none mb-1">
                     <button
                         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                         data-bs-toggle="collapse"
@@ -231,8 +309,9 @@
                                     کلاس</a></li>
                         </ul>
                     </div>
-                </li>
-                <li class="d-md-none mb-1">
+                </li> {% endcomment %}
+
+                {% comment %} <li class="d-md-none mb-1">
                     <button
                         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                         data-bs-toggle="collapse"
@@ -258,16 +337,18 @@
                                     مکان کلاس ها</a></li>
                         </ul>
                     </div>
-                </li>
-                <li class="d-md-none mb-1">
+                </li> {% endcomment %}
+
+                {% comment %} <li class="d-md-none mb-1">
                     <a href="./schedule/index.html"
                         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                         aria-expanded="false">
                         <i class="bi bi-filetype-pdf ms-1"></i>
                         گزارش گیری
                     </a>
-                </li>
-                <li class="d-md-none mb-1">
+                </li> {% endcomment %}
+
+                {% comment %} <li class="d-md-none mb-1">
                     <button
                         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                         data-bs-toggle="collapse"
@@ -289,8 +370,10 @@
                                     گیری تاریخچه</a></li>
                         </ul>
                     </div>
-                </li>
+                </li> {% endcomment %}
+
                 <li class="d-md-none border-top my-3"></li>
+
                 <li class="d-md-none mb-1">
                     <button
                         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
@@ -302,7 +385,7 @@
                     <div class="collapse" id="account-collapse">
                         <ul
                             class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="./auth/change-password.html"
+                            <li><a href="{% url 'main:changepassword' %}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
                                         class="bi bi-lock"></i>تغییر رمز
                                     عبور</a></li>
