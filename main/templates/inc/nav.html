@@ -1,0 +1,340 @@
+<nav class="navbar navbar-expand-md bg-primary shadow fixed-top">
+    <div class="container">
+        <div class="navbar-brand text-white pe-none">
+            <i class="bi bi-pin-angle-fill" style="color: lime"></i>
+            برنامه آموزشی دانشگاه
+        </div>
+
+        <div
+            class="d-none d-md-blo%A %d %B %Yck badge badge-lg bg-secondary me-4 fw-normal">
+            1403/4/25 دوشنبه
+        </div>
+
+        <button class="navbar-toggler ms-2 ms-sm-0" type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent">
+            <span class="navbar-toggler-icon text-white"></span>
+        </button>
+
+        <div class="collapse navbar-collapse"
+            id="navbarSupportedContent">
+            <!-- Left Side Of Navbar -->
+            <ul class="navbar-nav ms-auto">
+
+            </ul>
+
+            <!-- Right Side Of Navbar -->
+            <ul class="navbar-nav my-2 my-md-0 me-auto p-0 text-center">
+                <li class="d-none d-md-block nav-item dropdown">
+                    <a id="navbarDropdown2"
+                        class="nav-link text-white dropdown-toggle"
+                        href="#" role="button" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"
+                        v-pre>
+                        ترم :‌ انتخاب نشده
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-start text-center"
+                        aria-labelledby="navbarDropdown2">
+
+                        <a href="#" class="dropdown-item">4002</a>
+                        <a href="#" class="dropdown-item">4012</a>
+                        <a href="#" class="dropdown-item">4013</a>
+                    </div>
+                </li>
+                <div class="vr text-white mx-2 d-none d-md-block"></div>
+                <li class="d-none d-md-block nav-item dropdown">
+                    <a id="navbarDropdown3"
+                        class="nav-link text-white dropdown-toggle"
+                        href="#" role="button" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"
+                        v-pre>
+                        دانشکده :‌ انتخاب نشده
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-start text-center"
+                        aria-labelledby="navbarDropdown3">
+                        <a href="#" class="dropdown-item">دانشکده 1</a>
+                        <a href="#" class="dropdown-item">دانشکده 2</a>
+                    </div>
+                </li>
+                <div class="vr text-white mx-2 d-none d-md-block"></div>
+                <li class="nav-item dropdown text-white nav-link">
+                    <i class="bi bi-person"></i>
+                    نام کاربری : {{ request.user.username }}
+                </li>
+                <div class="vr text-white mx-2 d-none d-md-block"></div>
+                <li class="d-md-none mb-1">
+                    <button
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#term-collapse"
+                        aria-expanded="false">
+                        ترم : انتخاب نشده
+                    </button>
+                    <div class="collapse" id="term-collapse">
+                        <ul
+                            class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2">4001</a>
+                            </li>
+                            <li><a href="#"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2">4012</a>
+                            </li>
+                            <li><a href="#"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2">4013</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="d-md-none mb-1">
+                    <a href="./dashboard.html"
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        aria-expanded="false">
+                        <i class="bi bi-house ms-1"></i>داشبورد
+                    </a>
+                </li>
+                <li class="d-md-none mb-1">
+                    <button
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#lessons-collapse"
+                        aria-expanded="false">
+                        <i class="bi bi-book ms-1"></i>
+                        دروس
+                    </button>
+                    <div class="collapse" id="lessons-collapse">
+                        <ul
+                            class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="./lessons/index.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>همه</a>
+                            </li>
+                            <li><a href="./lessons/create.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>ایجاد</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="d-md-none mb-1">
+                    <button
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#professors-collapse"
+                        aria-expanded="false">
+                        <i class="bi bi-people ms-1"></i>
+                        اساتید
+                    </button>
+                    <div class="collapse" id="professors-collapse">
+                        <ul
+                            class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="./professors/index.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>همه</a>
+                            </li>
+                            <li><a href="./professors/create.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>افزودن</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="d-md-none mb-1">
+                    <button
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#time-periods-collapse"
+                        aria-expanded="false">
+                        <i class="bi bi-clock ms-1"></i>
+                        زمان بندی
+                    </button>
+                    <div class="collapse" id="time-periods-collapse">
+                        <ul
+                            class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="./time-periods/index.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>همه</a>
+                            </li>
+                            <li><a href="./time-periods/create.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>ایجاد</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="d-md-none mb-1">
+                    <button
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#eg-collapse"
+                        aria-expanded="false">
+                        <i class="bi bi-mortarboard ms-1"></i>
+                        گروه های آموزشی
+                    </button>
+                    <div class="collapse" id="eg-collapse">
+                        <ul
+                            class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="./educational-groups/index.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>همه</a>
+                            </li>
+                            <li><a href="./educational-groups/create.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>ایجاد</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="d-md-none mb-1">
+                    <button
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#entries-collapse"
+                        aria-expanded="false">
+                        <i class="bi bi-calendar-date ms-1"></i>
+                        ورودی ها
+                    </button>
+                    <div class="collapse" id="entries-collapse">
+                        <ul
+                            class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="./entries/index.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>همه</a>
+                            </li>
+                            <li><a href="./entries/create.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>ایجاد</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="d-md-none mb-1">
+                    <button
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#class-collapse"
+                        aria-expanded="false">
+                        <i class="bi bi-easel ms-1"></i>
+                        کلاس ها
+                    </button>
+                    <div class="collapse" id="class-collapse">
+                        <ul
+                            class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="./classrooms/index.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>جدول
+                                    کلاس ها</a></li>
+                            <li><a href="./classrooms/create.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>تعریف
+                                    کلاس</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="d-md-none mb-1">
+                    <button
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#location-collapse"
+                        aria-expanded="false">
+                        <i class="bi bi-pin-map ms-1"></i>
+                        مکان کلاس ها
+                    </button>
+                    <div class="collapse" id="location-collapse">
+                        <ul
+                            class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="./locations/index.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>همه</a>
+                            </li>
+                            <li><a href="./locations/create.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>ایجاد</a>
+                            </li>
+                            <li><a href="./locations/determine.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white text-nowrap my-2"><i
+                                        class="bi bi-chevron-left"></i>تعیین
+                                    مکان کلاس ها</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="d-md-none mb-1">
+                    <a href="./schedule/index.html"
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        aria-expanded="false">
+                        <i class="bi bi-filetype-pdf ms-1"></i>
+                        گزارش گیری
+                    </a>
+                </li>
+                <li class="d-md-none mb-1">
+                    <button
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#p-a-collapse"
+                        aria-expanded="false">
+                        <i class="bi bi-card-checklist ms-1"></i>
+                        حضور غیاب
+                    </button>
+                    <div class="collapse" id="p-a-collapse">
+                        <ul
+                            class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="./presence-and-absence/index.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>جدول
+                                    هفتگی</a></li>
+                            <li><a href="./presence-and-absence/history.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-chevron-left"></i>گزارش
+                                    گیری تاریخچه</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="d-md-none border-top my-3"></li>
+                <li class="d-md-none mb-1">
+                    <button
+                        class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#account-collapse"
+                        aria-expanded="false">
+                        <i class="bi bi-person"></i>حساب
+                    </button>
+                    <div class="collapse" id="account-collapse">
+                        <ul
+                            class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="./auth/change-password.html"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-lock"></i>تغییر رمز
+                                    عبور</a></li>
+                            <li><a href="{% url 'main:logout' %}"
+                                    class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                        class="bi bi-door-open"></i>خروج</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="d-none d-md-block nav-item dropdown">
+                    <a id="navbarDropdown"
+                        class="nav-link text-white dropdown-toggle"
+                        role="button" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false"
+                        v-pre>
+                        {{ request.user.get_full_name }}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-start text-center"
+                        aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item"
+                            href="{% url 'main:changepassword' %}">
+                            تغییر رمز عبور
+                        </a>
+
+                        <a class="dropdown-item" href="{% url 'main:logout' %}">
+                            خروج
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
