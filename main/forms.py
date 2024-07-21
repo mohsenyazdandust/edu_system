@@ -30,3 +30,9 @@ class CreateTermForm(forms.ModelForm):
         model = Term
         fields = ['title']
 
+
+class CreateGroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ['title', 'short']
+

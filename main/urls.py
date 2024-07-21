@@ -25,4 +25,9 @@ urlpatterns = [
     path('terms/add/', CreateTermView.as_view(), name="add_term"),
     path('terms/delete/<int:pk>/', DeleteTermView.as_view(), name="delete_term"),
     path('terms/update/<int:pk>/', UpdateTermView.as_view(), name="update_term"),
+    # GROUPS
+    path('groups/', CollegeGroupView.as_view(), name="groups"),
+    path('groups/add/', CreateGroupView.as_view(), name="add_group"),
+    path('groups/delete/<int:pk>/', DeleteGroupView.as_view(), name="delete_group"),
+    path('groups/update/<int:pk>/', UpdateGroupView.as_view(), name="update_group"),
 ]
