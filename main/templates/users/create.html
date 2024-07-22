@@ -86,9 +86,8 @@
                                     aria-label="Default select example"
                                     name="access_level">
                                     <option {% if not cuser %}selected{% endif %}>انتخاب کنید</option>
-                                    <option value="0" {% if cuser and cuser.access_level == 0 %}selected{% endif %}>مسئول آموزش کل</option>
-                                    <option value="1" {% if cuser and cuser.access_level == 1 %}selected{% endif %}>رئیس دانشکده</option>
-                                    <option value="2" {% if cuser and cuser.access_level == 2 %}selected{% endif %}>مدیر گروه</option>
+                                    <option value="1" {% if cuser and cuser.access_level == 1 %}selected{% endif %}>مسئول آموزش کل</option>
+                                    <option value="2" {% if cuser and cuser.access_level == 2 %}selected{% endif %}>رئیس دانشکده</option>
                                 </select>
                             </div>
                             <div class="mb-3">
