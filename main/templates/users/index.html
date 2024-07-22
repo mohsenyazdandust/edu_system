@@ -71,41 +71,41 @@
                             </thead>
                             <tbody>
                                 {% for user in users %}
-                                <tr>
-                                    <th class="fw-normal text-center align-middle"
-                                        scope="row">{{ forloop.counter }}</th>
-                                    <td
-                                        class="fw-normal text-center align-middle">
-                                        {{ user.get_full_name }}</td>
-                                    <td
-                                        class="fw-normal text-center align-middle">
-                                        {{ user.username }}</td>
-                                    <td
-                                        class="fw-normal text-center align-middle">
-                                        {% if user.access_level == 0 %}
-                                            مسئول آموزش کل
-                                        {% elif user.access_level == 1 %}
-                                            رئیس دانشکده
-                                        {% elif user.access_level == 2 %}
-                                            مدیر گروه
-                                        {% endif %}
-                                    </td>
+                                    {% if user.access_level != 0 %}
+                                    <tr>
+                                        <th class="fw-normal text-center align-middle"
+                                            scope="row">{{ forloop.counter }}</th>
+                                        <td
+                                            class="fw-normal text-center align-middle">
+                                            {{ user.get_full_name }}</td>
+                                        <td
+                                            class="fw-normal text-center align-middle">
+                                            {{ user.username }}</td>
+                                        <td
+                                            class="fw-normal text-center align-middle">
+                                            {% if user.access_level == 1 %}
+                                                مسئول آموزش کل
+                                            {% elif user.access_level == 2 %}
+                                                رئیس دانشکده
+                                            {% endif %}
+                                        </td>
 
-                                    <td
-                                        class="fw-normal text-center text-nowrap align-middle">
-                                        <a href="{% url "main:update_user" pk=user.id %}"
-                                            class="btn btn-sm btn-primary">
-                                            ویرایش
-                                        </a>
-                                        <button class="btn btn-sm btn-danger"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#Modal"
-                                            data-bs-action="{% url "main:delete_user" pk=user.id %}"
-                                            data-bs-name="{{ user.username }}">
-                                            حذف
-                                        </button>
-                                    </td>
-                                </tr>
+                                        <td
+                                            class="fw-normal text-center text-nowrap align-middle">
+                                            <a href="{% url "main:update_user" pk=user.id %}"
+                                                class="btn btn-sm btn-primary">
+                                                ویرایش
+                                            </a>
+                                            <button class="btn btn-sm btn-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#Modal"
+                                                data-bs-action="{% url "main:delete_user" pk=user.id %}"
+                                                data-bs-name="{{ user.username }}">
+                                                حذف
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
                                 {% endfor %}
                             </tbody>
                         </table>
