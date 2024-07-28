@@ -3,6 +3,15 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
+class Linker:
+    linked_term = models.ForeignKey('main.Term', on_delete=models.SET_NULL, null=True, blank=True)
+    linked_college = models.ForeignKey('main.College', on_delete=models.SET_NULL, null=True, blank=True)
+
+    
+    class Meta:
+        abstract = True
+
+
 class CUser(AbstractUser):
     access_level = models.IntegerField(default=0)
     cgroup = models.ForeignKey('main.Group', on_delete=models.SET_NULL, null=True, blank=True)
@@ -40,4 +49,8 @@ class Class(models.Model):
 
 
 class Entry(models.Model):
+    title = models.CharField(max_length=100)
+    
+
+class Timing(models.Model, Linker):
     title = models.CharField(max_length=100)

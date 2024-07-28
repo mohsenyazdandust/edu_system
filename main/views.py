@@ -20,13 +20,42 @@ from .forms import (
     CreateCourseForm,
     CreateTeacherForm,
 )
+
 from . import models
+
+from .mixins import GetLinkInfoMixin
 
 from django.shortcuts import render
 
 
 User = get_user_model()
 
+# CONFIGS
+
+class LinkInfoView(View):
+    def get(self, request, *args, **kwargs):
+        active_term = request.GET.get('term', False)
+        if active_term:
+            if int(active_term) == 0:
+                try:
+                    del request.session['active_term']
+                except:
+                    pass
+            else:
+                request.session['active_term'] = active_term
+        
+        active_college = request.GET.get('college', False)
+        if active_college:
+            if int(active_college) == 0:
+                try:
+                    del request.session['active_college']
+                except:
+                    pass
+            else:
+                request.session['active_college'] = active_college
+        
+        return redirect(request.META.get('HTTP_REFERER'))
+        
 
 # AUTH
 
@@ -44,9 +73,9 @@ class LogOutView(View):
         return redirect(reverse_lazy("main:login"))
     
 
-class ChangePasswordView(View):
+class ChangePasswordView(GetLinkInfoMixin, View):
     def get(self, request, *args, **kwargs):
-        return render(request, "auth/change-password.html")
+        return render(request, "auth/change-password.html", self.get_context_data(**kwargs))
     
     def post(self, request, *args, **kwargs):
         password1 = request.POST.get("password1", False)
@@ -63,12 +92,12 @@ class ChangePasswordView(View):
 
 # DASHBOARD
 
-class DashboardView(TemplateView):
+class DashboardView(GetLinkInfoMixin, TemplateView):
     template_name = "dashboard.html"
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
+
         context["classes"] = len(models.Class.objects.all())
         context["classrooms"] = len(models.Classroom.objects.all())
         context["courses"] = len(models.Course.objects.all())
@@ -81,13 +110,13 @@ class DashboardView(TemplateView):
 
 # USERS
 
-class UserListView(ListView):
+class UserListView(GetLinkInfoMixin, ListView):
     model = User
     context_object_name = "users"
     template_name = "users/index.html"
 
 
-class CreateUserView(CreateView):
+class CreateUserView(GetLinkInfoMixin, CreateView):
     model = User
     template_name = 'users/create.html'
     form_class = CreateUserForm
@@ -102,14 +131,14 @@ class CreateUserView(CreateView):
         return context
     
 
-class DeleteUserView(DeleteView):
+class DeleteUserView(GetLinkInfoMixin, DeleteView):
     model = User
     
     def get_success_url(self):
         return reverse_lazy('main:users') 
     
 
-class UpdateUserView(UpdateView):
+class UpdateUserView(GetLinkInfoMixin, UpdateView):
     model = User
     template_name = "users/create.html"
     form_class = CreateUserForm
@@ -126,13 +155,13 @@ class UpdateUserView(UpdateView):
     
 # COLLEGES
 
-class CollegeListView(ListView):
+class CollegeListView(GetLinkInfoMixin, ListView):
     model = models.College
     context_object_name = "colleges"
     template_name = "colleges/index.html"
 
 
-class CreateCollegeView(CreateView):
+class CreateCollegeView(GetLinkInfoMixin, CreateView):
     model = models.College    
     template_name = 'colleges/create.html'
     form_class = CreateCollegeForm
@@ -141,14 +170,14 @@ class CreateCollegeView(CreateView):
         return reverse_lazy('main:colleges') 
     
 
-class DeleteCollegeView(DeleteView):
+class DeleteCollegeView(GetLinkInfoMixin, DeleteView):
     model = models.College
     
     def get_success_url(self):
         return reverse_lazy('main:colleges') 
     
 
-class UpdateCollegeView(UpdateView):
+class UpdateCollegeView(GetLinkInfoMixin, UpdateView):
     model = models.College
     template_name = "colleges/create.html"
     form_class = CreateCollegeForm
@@ -160,13 +189,13 @@ class UpdateCollegeView(UpdateView):
 
 # TERMS
 
-class CollegeTermView(ListView):
+class CollegeTermView(GetLinkInfoMixin, ListView):
     model = models.Term
     context_object_name = "terms"
     template_name = "terms/index.html"
 
 
-class CreateTermView(CreateView):
+class CreateTermView(GetLinkInfoMixin, CreateView):
     model = models.Term    
     template_name = 'terms/create.html'
     form_class = CreateTermForm
@@ -175,14 +204,14 @@ class CreateTermView(CreateView):
         return reverse_lazy('main:terms') 
     
 
-class DeleteTermView(DeleteView):
+class DeleteTermView(GetLinkInfoMixin, DeleteView):
     model = models.Term
     
     def get_success_url(self):
         return reverse_lazy('main:terms') 
     
 
-class UpdateTermView(UpdateView):
+class UpdateTermView(GetLinkInfoMixin, UpdateView):
     model = models.Term
     template_name = "terms/create.html"
     form_class = CreateTermForm
@@ -194,13 +223,13 @@ class UpdateTermView(UpdateView):
 
 # GROUPS
 
-class CollegeGroupView(ListView):
+class CollegeGroupView(GetLinkInfoMixin, ListView):
     model = models.Group
     context_object_name = "groups"
     template_name = "educational-groups/index.html"
 
 
-class CreateGroupView(CreateView):
+class CreateGroupView(GetLinkInfoMixin, CreateView):
     model = models.Group    
     template_name = 'educational-groups/create.html'
     form_class = CreateGroupForm
@@ -209,14 +238,14 @@ class CreateGroupView(CreateView):
         return reverse_lazy('main:groups') 
     
 
-class DeleteGroupView(DeleteView):
+class DeleteGroupView(GetLinkInfoMixin, DeleteView):
     model = models.Group
     
     def get_success_url(self):
         return reverse_lazy('main:groups') 
     
 
-class UpdateGroupView(UpdateView):
+class UpdateGroupView(GetLinkInfoMixin, UpdateView):
     model = models.Group
     template_name = "educational-groups/create.html"
     form_class = CreateGroupForm
@@ -228,13 +257,13 @@ class UpdateGroupView(UpdateView):
 
 # COURSES
 
-class CollegeCourseView(ListView):
+class CollegeCourseView(GetLinkInfoMixin, ListView):
     model = models.Course
     context_object_name = "courses"
     template_name = "lessons/index.html"
 
 
-class CreateCourseView(CreateView):
+class CreateCourseView(GetLinkInfoMixin, CreateView):
     model = models.Course    
     template_name = 'lessons/create.html'
     form_class = CreateCourseForm
@@ -243,14 +272,14 @@ class CreateCourseView(CreateView):
         return reverse_lazy('main:courses') 
     
 
-class DeleteCourseView(DeleteView):
+class DeleteCourseView(GetLinkInfoMixin, DeleteView):
     model = models.Course
     
     def get_success_url(self):
         return reverse_lazy('main:courses') 
     
 
-class UpdateCourseView(UpdateView):
+class UpdateCourseView(GetLinkInfoMixin, UpdateView):
     model = models.Course
     template_name = "lessons/create.html"
     form_class = CreateCourseForm
@@ -261,13 +290,13 @@ class UpdateCourseView(UpdateView):
 
 # COURSES
 
-class CollegeTeacherView(ListView):
+class CollegeTeacherView(GetLinkInfoMixin, ListView):
     model = models.Teacher
     context_object_name = "teachers"
     template_name = "professors/index.html"
 
 
-class CreateTeacherView(CreateView):
+class CreateTeacherView(GetLinkInfoMixin, CreateView):
     model = models.Teacher    
     template_name = 'professors/create.html'
     form_class = CreateTeacherForm
@@ -276,14 +305,14 @@ class CreateTeacherView(CreateView):
         return reverse_lazy('main:teachers') 
     
 
-class DeleteTeacherView(DeleteView):
+class DeleteTeacherView(GetLinkInfoMixin, DeleteView):
     model = models.Teacher
     
     def get_success_url(self):
         return reverse_lazy('main:teachers') 
     
 
-class UpdateTeacherView(UpdateView):
+class UpdateTeacherView(GetLinkInfoMixin, UpdateView):
     model = models.Teacher
     template_name = "professors/create.html"
     form_class = CreateTeacherForm

@@ -4,6 +4,8 @@ from .views import *
 
 
 urlpatterns = [
+    # CONFIGS
+    path('link/', LinkInfoView.as_view(), name='link_info'),
     # AUTH
     path('', LogInView.as_view(), name="login"),
     path('logout/', LogOutView.as_view(), name="logout"),
