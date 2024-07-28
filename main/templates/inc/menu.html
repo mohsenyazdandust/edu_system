@@ -190,7 +190,7 @@
             </div>
         </li>
 
-        {% comment %} <li class="mb-1">
+        <li class="mb-1">
             <button
                 class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                 data-bs-toggle="collapse"
@@ -202,17 +202,17 @@
             <div class="collapse" id="entries-collapse">
                 <ul
                     class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="./entries/index.html"
+                    <li><a href="{% url 'main:entries' %}"
                             class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
                                 class="bi bi-chevron-left"></i>همه</a>
                     </li>
-                    <li><a href="./entries/create.html"
+                    <li><a href="{% url 'main:add_entry' %}"
                             class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
                                 class="bi bi-chevron-left"></i>ایجاد</a>
                     </li>
                 </ul>
             </div>
-        </li> {% endcomment %}
+        </li>
 
         {% comment %} <li class="mb-1">
             <button

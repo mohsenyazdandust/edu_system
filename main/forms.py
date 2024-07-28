@@ -47,3 +47,9 @@ class CreateTeacherForm(forms.ModelForm):
     class Meta:
         model = Teacher
         fields = ['name']
+
+
+class CreateEntryForm(forms.ModelForm):
+    class Meta:
+        model = Entry
+        fields = ['title']

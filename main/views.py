@@ -19,6 +19,7 @@ from .forms import (
     CreateGroupForm,
     CreateCourseForm,
     CreateTeacherForm,
+    CreateEntryForm,
 )
 
 from . import models
@@ -320,3 +321,36 @@ class UpdateTeacherView(GetLinkInfoMixin, UpdateView):
         
     def get_success_url(self):
         return reverse_lazy('main:teachers') 
+    
+# ENTRY
+
+class CollegeEntryView(GetLinkInfoMixin, ListView):
+    model = models.Entry
+    context_object_name = "entries"
+    template_name = "entries/index.html"
+
+
+class CreateEntryView(GetLinkInfoMixin, CreateView):
+    model = models.Entry    
+    template_name = 'entries/create.html'
+    form_class = CreateEntryForm
+    
+    def get_success_url(self):
+        return reverse_lazy('main:entries') 
+    
+
+class DeleteEntryView(GetLinkInfoMixin, DeleteView):
+    model = models.Entry
+    
+    def get_success_url(self):
+        return reverse_lazy('main:entries') 
+    
+
+class UpdateEntryView(GetLinkInfoMixin, UpdateView):
+    model = models.Entry
+    template_name = "entries/create.html"
+    form_class = CreateEntryForm
+    context_object_name = "entry"
+        
+    def get_success_url(self):
+        return reverse_lazy('main:entries') 
