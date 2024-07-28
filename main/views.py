@@ -12,21 +12,17 @@ from django.contrib.auth import get_user_model
 
 # from braces.views import AnonymousRequiredMixin, LoginRequiredMixin, StaffuserRequiredMixin
 
-# from hub.models import Download, Source
-
 from .forms import (
     CreateUserForm,
     CreateCollegeForm,
     CreateTermForm,
     CreateGroupForm,
-    CreateCourseForm
+    CreateCourseForm,
+    CreateTeacherForm,
 )
 from . import models
 
-
-
 from django.shortcuts import render
-# from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 
 User = get_user_model()
@@ -262,3 +258,36 @@ class UpdateCourseView(UpdateView):
         
     def get_success_url(self):
         return reverse_lazy('main:courses') 
+
+# COURSES
+
+class CollegeTeacherView(ListView):
+    model = models.Teacher
+    context_object_name = "teachers"
+    template_name = "professors/index.html"
+
+
+class CreateTeacherView(CreateView):
+    model = models.Teacher    
+    template_name = 'professors/create.html'
+    form_class = CreateTeacherForm
+    
+    def get_success_url(self):
+        return reverse_lazy('main:teachers') 
+    
+
+class DeleteTeacherView(DeleteView):
+    model = models.Teacher
+    
+    def get_success_url(self):
+        return reverse_lazy('main:teachers') 
+    
+
+class UpdateTeacherView(UpdateView):
+    model = models.Teacher
+    template_name = "professors/create.html"
+    form_class = CreateTeacherForm
+    context_object_name = "teacher"
+        
+    def get_success_url(self):
+        return reverse_lazy('main:teachers') 

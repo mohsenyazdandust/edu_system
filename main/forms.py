@@ -42,3 +42,8 @@ class CreateCourseForm(forms.ModelForm):
         model = Course
         fields = ['name', 'code', 'group']
 
+
+class CreateTeacherForm(forms.ModelForm):
+    class Meta:
+        model = Teacher
+        fields = ['name']
