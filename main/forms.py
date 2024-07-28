@@ -36,3 +36,9 @@ class CreateGroupForm(forms.ModelForm):
         model = Group
         fields = ['title', 'short']
 
+
+class CreateCourseForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = ['name', 'code', 'group']
+

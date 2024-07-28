@@ -30,4 +30,9 @@ urlpatterns = [
     path('groups/add/', CreateGroupView.as_view(), name="add_group"),
     path('groups/delete/<int:pk>/', DeleteGroupView.as_view(), name="delete_group"),
     path('groups/update/<int:pk>/', UpdateGroupView.as_view(), name="update_group"),
+    # COURSES
+    path('courses/', CollegeCourseView.as_view(), name="courses"),
+    path('courses/add/', CreateCourseView.as_view(), name="add_course"),
+    path('courses/delete/<int:pk>/', DeleteCourseView.as_view(), name="delete_course"),
+    path('courses/update/<int:pk>/', UpdateCourseView.as_view(), name="update_course"),
 ]

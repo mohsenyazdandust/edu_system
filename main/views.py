@@ -14,7 +14,13 @@ from django.contrib.auth import get_user_model
 
 # from hub.models import Download, Source
 
-from .forms import CreateUserForm, CreateCollegeForm, CreateTermForm, CreateGroupForm
+from .forms import (
+    CreateUserForm,
+    CreateCollegeForm,
+    CreateTermForm,
+    CreateGroupForm,
+    CreateCourseForm
+)
 from . import models
 
 
@@ -223,3 +229,36 @@ class UpdateGroupView(UpdateView):
     def get_success_url(self):
         return reverse_lazy('main:groups') 
     
+
+# COURSES
+
+class CollegeCourseView(ListView):
+    model = models.Course
+    context_object_name = "courses"
+    template_name = "lessons/index.html"
+
+
+class CreateCourseView(CreateView):
+    model = models.Course    
+    template_name = 'lessons/create.html'
+    form_class = CreateCourseForm
+    
+    def get_success_url(self):
+        return reverse_lazy('main:courses') 
+    
+
+class DeleteCourseView(DeleteView):
+    model = models.Course
+    
+    def get_success_url(self):
+        return reverse_lazy('main:courses') 
+    
+
+class UpdateCourseView(UpdateView):
+    model = models.Course
+    template_name = "lessons/create.html"
+    form_class = CreateCourseForm
+    context_object_name = "course"
+        
+    def get_success_url(self):
+        return reverse_lazy('main:courses') 
