@@ -53,3 +53,9 @@ class CreateEntryForm(forms.ModelForm):
     class Meta:
         model = Entry
         fields = ['title']
+
+
+class CreateTimingForm(forms.ModelForm):
+    class Meta:
+        model = Timing
+        fields = ['title']

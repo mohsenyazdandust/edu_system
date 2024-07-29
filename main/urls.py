@@ -47,4 +47,9 @@ urlpatterns = [
     path('entries/add/', CreateEntryView.as_view(), name="add_entry"),
     path('entries/delete/<int:pk>/', DeleteEntryView.as_view(), name="delete_entry"),
     path('entries/update/<int:pk>/', UpdateEntryView.as_view(), name="update_entry"),
+    # TIMING
+    path('times/', CollegeTimingView.as_view(), name="times"),
+    path('times/add/', CreateTimingView.as_view(), name="add_time"),
+    path('times/delete/<int:pk>/', DeleteTimingView.as_view(), name="delete_time"),
+    path('times/update/<int:pk>/', UpdateTimingView.as_view(), name="update_time"),
 ]

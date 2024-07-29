@@ -20,6 +20,7 @@ from .forms import (
     CreateCourseForm,
     CreateTeacherForm,
     CreateEntryForm,
+    CreateTimingForm,
 )
 
 from . import models
@@ -354,3 +355,37 @@ class UpdateEntryView(GetLinkInfoMixin, UpdateView):
         
     def get_success_url(self):
         return reverse_lazy('main:entries') 
+
+
+# TIMING
+
+class CollegeTimingView(GetLinkInfoMixin, ListView):
+    model = models.Timing
+    context_object_name = "times"
+    template_name = "time-periods/index.html"
+
+
+class CreateTimingView(GetLinkInfoMixin, CreateView):
+    model = models.Timing    
+    template_name = 'time-periods/create.html'
+    form_class = CreateTimingForm
+    
+    def get_success_url(self):
+        return reverse_lazy('main:times') 
+    
+
+class DeleteTimingView(GetLinkInfoMixin, DeleteView):
+    model = models.Timing
+    
+    def get_success_url(self):
+        return reverse_lazy('main:times') 
+    
+
+class UpdateTimingView(GetLinkInfoMixin, UpdateView):
+    model = models.Timing
+    template_name = "time-periods/create.html"
+    form_class = CreateTimingForm
+    context_object_name = "time"
+        
+    def get_success_url(self):
+        return reverse_lazy('main:times') 
