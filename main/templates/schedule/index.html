@@ -7,9 +7,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="4HuVd2ZorvA7Mg1YQ6ZbQ9nRer37bYiTJ1SWrTYD">
-
     <title>گزارش گیری | برنامه آموزشی دانشگاه</title>
 
     <!-- Scripts -->
@@ -41,6 +38,27 @@
 
         .select2-selection {
             border: 0 !important;
+        }
+
+        @media print {
+            th, td {
+                border: 1px solid black !important;
+            }
+            @page {
+                size: A3;
+            }
+            body {
+                visibility: hidden;
+            }
+            #printable_table {
+                visibility: visible;
+                position: fixed;
+                z-index: 10000;
+                top: 0;
+                right:0;
+                width: 100%;
+                object-fit: cover;
+            }
         }
     </style>
 </head>
@@ -251,20 +269,20 @@
                         </div>
 
                         <div class="col">
-                            <button id="preview-button" type="button"
+                            <button id="preview-button" type="button" onclick="window.print();"
                                 class="btn btn-primary w-100 mt-4">پیش نمایش <i
                                     class="bi bi-eye"></i></button>
                         </div>
 
                         <div class="col">
-                            <button id="download-button" type="button"
+                            <button id="download-button" type="button" onclick="window.print();"
                                 class="btn btn-warning text-white w-100 mt-4">دانلود
                                 PDF <i class="bi bi-download"></i></button>
                         </div>
                     </form>
 
                     <div class="table-responsive text-center">
-                        <table
+                        <table id="printable_table"
                             class="table table-bordered table-responsive border-secondary rounded shadow-sm"
                             style="font-size: 12px">
                             <thead>
