@@ -566,7 +566,12 @@ class ScheduleListView(GetLinkInfoMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context["classes"] = models.Class.objects.all()
+        classes = models.Class.objects.all()
+        if context['active_info']['term'] and context['active_info']['college']:
+            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college'])
+        else:
+            context['classes'] = False
+        
         context["times"] = models.Timing.objects.all()
         context["locations"] = models.Location.objects.all()
         

@@ -83,7 +83,7 @@
 
                     <form
                         class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mb-4"
-                        action="#" method="POST" enctype="multipart/form-data">
+                        action="#" method="POST" enctype="multipart/form-data" onsubmit="return false" >
                         <div class="col">
                             <label for="classes" class="form-label">همه کلاس ها
                                 :</label>
@@ -696,7 +696,7 @@
 
             const classes = document.getElementById('classes')
             const professors = document.getElementById('professors')
-            const educational_groups = document.getElementById('educational_groups')
+            const educational_groups = document.getElementById('groups')
             const entries = document.getElementById('entries')
             const status = document.getElementById('status')
 

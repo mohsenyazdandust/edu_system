@@ -58,6 +58,11 @@
             </div>
             <div class="card col-11 col-md-9 mx-auto shadow px-0"
                 style="border-radius: 50px; overflow: hidden;">
+                {% if classes == False %}
+                <div class="alert alert-danger text-center" role="alert">
+                    ابتدا ترم و دانشکده را از بالای صفحه انتخاب کنید!
+                </div>
+                {% else %}
                 <div class="card-header px-4 text-bg-primary">
                     گزارش گیری </div>
                 <div class="card-body bg-primary-subtle">
@@ -70,184 +75,177 @@
                         <br>
                         درصورت وجود نداشتن درس, استاد و ... مدنظر در لیست های
                         زیر به معنای عدم <a class="link-primary"
-                            href="#">
+                            href="{% url 'main:add_class' %}">
                             تعریف کلاس</a> برای آنهاست.
                     </div>
 
                     <form id="schedule-form"
                         class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mb-4"
                         action="#"
-                        method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="_token"
-                            value="4HuVd2ZorvA7Mg1YQ6ZbQ9nRer37bYiTJ1SWrTYD"
-                            autocomplete="off"> <input type="hidden"
-                            name="_method" value="post">
-                        <div class="col">
-                            <label for="classes" class="form-label">همه کلاس ها
-                                :</label>
-                            <select name="classes[]"
-                                class="js-example-basic-multiple text-center"
-                                id="classes" multiple disabled>
-                                <option disabled>کلاس ها را انتخاب کنید</option>
-
-                                <option value="11">
-                                    ریاضی محسنی (چهارشنبه
-                                </option>
-                                <option value="10">
-                                    تاریخ محمدی (شنبه
-                                </option>
-                                <option value="8">
-                                    ریاضی سلیمانی (سه شنبه
-                                </option>
-                                <option value="9">
-                                    شبکه محسنی (چهارشنبه
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="col">
-                            <label for="professors" class="form-label">کلاس های
-                                اساتید :</label>
-                            <select name="professors[]"
-                                class="js-example-basic-multiple text-center"
-                                id="professors" multiple>
-                                <option disabled>اساتید را انتخاب کنید</option>
-
-                                <option value="1">محمدی</option>
-                                <option value="2">محسنی</option>
-                                <option value="3">سلیمانی</option>
-                            </select>
-                        </div>
-
-                        <div class="col">
-                            <label for="educational_groups"
-                                class="form-label">کلاس های گروه های آموزشی
-                                :</label>
-                            <select name="educational_groups[]"
-                                class="js-example-basic-multiple text-center"
-                                id="educational_groups" multiple>
-                                <option disabled>گروه ها را انتخاب کنید</option>
-
-                                <option value="1">گروه کامپیوتر</option>
-                                <option value="2">گروه روانشناسی</option>
-                                <option value="3">گروه حسابداری</option>
-                            </select>
-                        </div>
-
-                        <div class="col">
-                            <label for="entries" class="form-label">کلاس های
-                                ورودی ها :</label>
-                            <select name="entries[]"
-                                class="js-example-basic-multiple text-center"
-                                id="entries" multiple>
-                                <option disabled>کلاس ها را انتخاب کنید</option>
-
-                                <option value="1">1400</option>
-                                <option value="3">1402</option>
-                            </select>
-                        </div>
-
-                        <div class="col">
-                            <label for="status" class="form-label">وضعیت کلاس
-                                ها:</label>
-                            <select name="status"
-                                class="form-select text-center" id="status">
-                                <option value="" selected>وضعیت را انتخاب کنید
-                                </option>
-                                <option value="ثابت">ثابت</option>
-                                <option value="چرخشی">چرخشی</option>
-                            </select>
-
-                            <div class="form-check form-switch mt-4">
-                                <input name="manually_select" value="true"
-                                    class="form-check-input" type="checkbox"
-                                    role="switch" id="manually-select">
-                                <label class="form-check-label"
-                                    style="margin-right: 40px"
-                                    id="manually-select-label">انتخاب دستی کلاس
-                                    ها</label>
-                            </div>
-                        </div>
-
-                        <div class="col row row-cols-2 text-nowrap user-select-none mt-3"
-                            style="font-size: 0.8rem !important">
+                        method="POST" enctype="multipart/form-data" onsubmit="return false" >
+                        
                             <div class="col">
-                                <div class="form-check">
-                                    <input name="show_lesson_group"
-                                        id="show_lesson_group"
-                                        class="form-check-input" type="checkbox"
-                                        value="true" checked>
-                                    <label class="form-check-label"
-                                        style="margin-right: 25px"
-                                        for="show_lesson_group">
-                                        نمایش گروه درس
-                                    </label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input name="show_lesson_name"
-                                        id="show_lesson_name"
-                                        class="form-check-input" type="checkbox"
-                                        value="true" checked>
-                                    <label class="form-check-label"
-                                        style="margin-right: 25px"
-                                        for="show_lesson_name">
-                                        نمایش نام درس
-                                    </label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input name="show_professor_name"
-                                        id="show_professor_name"
-                                        class="form-check-input" type="checkbox"
-                                        value="true" checked>
-                                    <label class="form-check-label"
-                                        style="margin-right: 25px"
-                                        for="show_professor_name">
-                                        نمایش نام استاد
-                                    </label>
-                                </div>
+                                <label for="classes" class="form-label">همه کلاس ها
+                                    :</label>
+                                <select name="classes[]"
+                                    class="js-example-basic-multiple text-center"
+                                    id="classes" multiple disabled>
+                                    <option disabled>کلاس ها را انتخاب کنید</option>
+                                    {% for class in classes %}
+                                    <option value="{{ class.id }}">
+                                        {{ class.course.name }} {{ class.teacher.name }} (
+                                            {% if class.day == 0 %}
+                                                شنبه
+                                            {% elif class.day == 1 %}
+                                                یک شنبه
+                                            {% elif class.day == 2 %}
+                                                دو شنبه
+                                            {% elif class.day == 3 %}
+                                                سه شنبه
+                                            {% elif class.day == 4 %}
+                                                چهار شنبه
+                                            {% endif %}
+                                             {{ class.time.title }}
+                                        )                                    
+                                    </option>
+                                    
+                                    {% endfor %}
+                                    
+                                </select>
                             </div>
-
+    
                             <div class="col">
-                                <div class="form-check">
-                                    <input name="show_status" id="show_status"
+                                <label for="professors" class="form-label">کلاس های
+                                    اساتید :</label>
+                                <select name="professors[]"
+                                    class="js-example-basic-multiple text-center"
+                                    id="professors" multiple>
+                                    <option disabled>اساتید را انتخاب کنید</option>
+    
+                                    {% for teacher in teachers %}
+                                        <option value="{{ teacher.id }}">{{ teacher.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+    
+                            <div class="col">
+                                <label for="groups"
+                                    class="form-label">کلاس های گروه های
+                                    آموزشی :</label>
+                                <select name="educational_groups[]"
+                                    class="js-example-basic-multiple text-center"
+                                    id="groups" multiple>
+                                    <option disabled>گروه ها را انتخاب کنید</option>
+                                    {% for group in groups %}
+                                    <option value="{{ group.id }}">{{ group.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+    
+                            <div class="col">
+                                <label for="entries" class="form-label">کلاس های
+                                    ورودی ها :</label>
+                                <select name="entries[]"
+                                    class="js-example-basic-multiple text-center"
+                                    id="entries" multiple>
+                                    <option disabled>کلاس ها را انتخاب کنید</option>
+    
+                                    {% for entry in entries %}
+                                    <option value="{{ entry.id }}">{{ entry.title }}</option>
+    
+                                    {% endfor %}
+                                </select>
+                            </div>
+    
+                            <div class="col">
+                                <label for="status" class="form-label">وضعیت کلاس
+                                    ها:</label>
+                                <select name="status"
+                                    class="form-select text-center" id="status">
+                                    <option value="" selected>وضعیت را انتخاب کنید
+                                    </option>
+                                    <option value="0">ثابت</option>
+                                    <option value="1">چرخشی</option>
+                                </select>
+    
+                                <div class="form-check form-switch mt-4">
+                                    <input name="manually_select" value="true"
                                         class="form-check-input" type="checkbox"
-                                        value="true" checked>
+                                        role="switch" id="manually-select">
                                     <label class="form-check-label"
-                                        style="margin-right: 25px"
-                                        for="show_status">
-                                        نمایش وضعیت
-                                    </label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input name="show_entry_year"
-                                        id="show_entry_year"
-                                        class="form-check-input" type="checkbox"
-                                        value="true" checked>
-                                    <label class="form-check-label"
-                                        style="margin-right: 25px"
-                                        for="show_entry_year">
-                                        نمایش ورودی
-                                    </label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input name="show_eg_name" id="show_eg_name"
-                                        class="form-check-input" type="checkbox"
-                                        value="true" checked>
-                                    <label class="form-check-label"
-                                        style="margin-right: 25px"
-                                        for="show_eg_name">
-                                        نمایش گروه آموزشی
-                                    </label>
+                                        style="margin-right: 40px"
+                                        id="manually-select-label">انتخاب دستی کلاس
+                                        ها</label>
                                 </div>
                             </div>
-                        </div>
-
+    
+                            <div class="col row row-cols-2 text-nowrap user-select-none mt-3"
+                                style="font-size: 0.8rem !important">
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input name="show_lesson_name"
+                                            id="show_lesson_name"
+                                            class="form-check-input" type="checkbox"
+                                            value="true" checked>
+                                        <label class="form-check-label"
+                                            style="margin-right: 25px"
+                                            for="show_lesson_name">
+                                            نمایش نام درس
+                                        </label>
+                                    </div>
+    
+                                    <div class="form-check">
+                                        <input name="show_professor_name"
+                                            id="show_professor_name"
+                                            class="form-check-input" type="checkbox"
+                                            value="true" checked>
+                                        <label class="form-check-label"
+                                            style="margin-right: 25px"
+                                            for="show_professor_name">
+                                            نمایش نام استاد
+                                        </label>
+                                    </div>
+                                </div>
+    
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input name="show_status" id="show_status"
+                                            class="form-check-input" type="checkbox"
+                                            value="true" checked>
+                                        <label class="form-check-label"
+                                            style="margin-right: 25px"
+                                            for="show_status">
+                                            نمایش وضعیت
+                                        </label>
+                                    </div>
+    
+                                    <div class="form-check">
+                                        <input name="show_entry_year"
+                                            id="show_entry_year"
+                                            class="form-check-input" type="checkbox"
+                                            value="true" checked>
+                                        <label class="form-check-label"
+                                            style="margin-right: 25px"
+                                            for="show_entry_year">
+                                            نمایش ورودی
+                                        </label>
+                                    </div>
+    
+                                    <div class="form-check">
+                                        <input name="show_eg_name" id="show_eg_name"
+                                            class="form-check-input" type="checkbox"
+                                            value="true" checked>
+                                        <label class="form-check-label"
+                                            style="margin-right: 25px"
+                                            for="show_eg_name">
+                                            نمایش گروه آموزشی
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         <div class="col">
-                            <button id="save-button" type="button"
+                            <button id="save-button" type="button" onclick="filter_data()"
                                 class="btn btn-success w-100 mt-4">اعمال <i
                                     class="bi bi-check-lg"></i></button>
                         </div>
@@ -317,19 +315,27 @@
                                                     {% for class in classes %}
                                                     {% if class.location == location and class.day == 0 and class.time == time %}
                                                     <div class="px-1">
+<span class="class_id-{{ class.id }} teacher_id-{{ class.teacher.id }} status_id-{{ class.stat }} group_id-{{ class.group.id }} entry_id-{{ class.entry.id }} spanid"></span>
+
+                                                        <div class="write-group">
                                                         گروه درس :
                                                         {{ class.group.title }}
-                                                        <br>
+                                                        </div>
+
+                                                        <div class="write-course">
 
                                                         درس :
                                                         {{ class.course.name }}
 
-                                                        <br>
+                                                        </div>
 
+                                                        <div class="write-teacher">
                                                         استاد :
                                                         {{ class.teacher.name }}
 
-                                                        <br>
+                                                        </div>
+
+                                                        <div class="write-stat">
 
                                                         وضعیت :
                                                         {% if class.stat == 0 %}
@@ -337,12 +343,13 @@
                                                         {% else %}
                                                         چرخشی
                                                         {% endif %}
-                                                        <br>
+                                                        </div>
 
+                                                        <div class="write-entry">
 
                                                         ورودی :
                                                         {{ class.entry.title }}
-                                                        <br>
+                                                        </div>
                                                     </div>
                                                     {% endif %}
                                                     {% endfor %}
@@ -378,19 +385,27 @@
                                                     {% for class in classes %}
                                                     {% if class.location == location and class.day == 1 and class.time == time %}
                                                     <div class="px-1">
+<span class="class_id-{{ class.id }} teacher_id-{{ class.teacher.id }} status_id-{{ class.stat }} group_id-{{ class.group.id }} entry_id-{{ class.entry.id }} spanid"></span>
+
+                                                        <div class="write-group">
                                                         گروه درس :
                                                         {{ class.group.title }}
-                                                        <br>
+                                                        </div>
+
+                                                        <div class="write-course">
 
                                                         درس :
                                                         {{ class.course.name }}
 
-                                                        <br>
+                                                        </div>
 
+                                                        <div class="write-teacher">
                                                         استاد :
                                                         {{ class.teacher.name }}
 
-                                                        <br>
+                                                        </div>
+
+                                                        <div class="write-stat">
 
                                                         وضعیت :
                                                         {% if class.stat == 0 %}
@@ -398,12 +413,13 @@
                                                         {% else %}
                                                         چرخشی
                                                         {% endif %}
-                                                        <br>
+                                                        </div>
 
+                                                        <div class="write-entry">
 
                                                         ورودی :
                                                         {{ class.entry.title }}
-                                                        <br>
+                                                        </div>
                                                     </div>
                                                     {% endif %}
                                                     {% endfor %}
@@ -439,19 +455,27 @@
                                                     {% for class in classes %}
                                                     {% if class.location == location and class.day == 2 and class.time == time %}
                                                     <div class="px-1">
+<span class="class_id-{{ class.id }} teacher_id-{{ class.teacher.id }} status_id-{{ class.stat }} group_id-{{ class.group.id }} entry_id-{{ class.entry.id }} spanid"></span>
+
+                                                        <div class="write-group">
                                                         گروه درس :
                                                         {{ class.group.title }}
-                                                        <br>
+                                                        </div>
+
+                                                        <div class="write-course">
 
                                                         درس :
                                                         {{ class.course.name }}
 
-                                                        <br>
+                                                        </div>
 
+                                                        <div class="write-teacher">
                                                         استاد :
                                                         {{ class.teacher.name }}
 
-                                                        <br>
+                                                        </div>
+
+                                                        <div class="write-stat">
 
                                                         وضعیت :
                                                         {% if class.stat == 0 %}
@@ -459,12 +483,13 @@
                                                         {% else %}
                                                         چرخشی
                                                         {% endif %}
-                                                        <br>
+                                                        </div>
 
+                                                        <div class="write-entry">
 
                                                         ورودی :
                                                         {{ class.entry.title }}
-                                                        <br>
+                                                        </div>
                                                     </div>
                                                     {% endif %}
                                                     {% endfor %}
@@ -500,19 +525,27 @@
                                                     {% for class in classes %}
                                                     {% if class.location == location and class.day == 3 and class.time == time %}
                                                     <div class="px-1">
+<span class="class_id-{{ class.id }} teacher_id-{{ class.teacher.id }} status_id-{{ class.stat }} group_id-{{ class.group.id }} entry_id-{{ class.entry.id }} spanid"></span>
+
+                                                        <div class="write-group">
                                                         گروه درس :
                                                         {{ class.group.title }}
-                                                        <br>
+                                                        </div>
+
+                                                        <div class="write-course">
 
                                                         درس :
                                                         {{ class.course.name }}
 
-                                                        <br>
+                                                        </div>
 
+                                                        <div class="write-teacher">
                                                         استاد :
                                                         {{ class.teacher.name }}
 
-                                                        <br>
+                                                        </div>
+
+                                                        <div class="write-stat">
 
                                                         وضعیت :
                                                         {% if class.stat == 0 %}
@@ -520,12 +553,13 @@
                                                         {% else %}
                                                         چرخشی
                                                         {% endif %}
-                                                        <br>
+                                                        </div>
 
+                                                        <div class="write-entry">
 
                                                         ورودی :
                                                         {{ class.entry.title }}
-                                                        <br>
+                                                        </div>
                                                     </div>
                                                     {% endif %}
                                                     {% endfor %}
@@ -561,19 +595,27 @@
                                                     {% for class in classes %}
                                                     {% if class.location == location and class.day == 4 and class.time == time %}
                                                     <div class="px-1">
+<span class="class_id-{{ class.id }} teacher_id-{{ class.teacher.id }} status_id-{{ class.stat }} group_id-{{ class.group.id }} entry_id-{{ class.entry.id }} spanid"></span>
+
+                                                        <div class="write-group">
                                                         گروه درس :
                                                         {{ class.group.title }}
-                                                        <br>
+                                                        </div>
+
+                                                        <div class="write-course">
 
                                                         درس :
                                                         {{ class.course.name }}
 
-                                                        <br>
+                                                        </div>
 
+                                                        <div class="write-teacher">
                                                         استاد :
                                                         {{ class.teacher.name }}
 
-                                                        <br>
+                                                        </div>
+
+                                                        <div class="write-stat">
 
                                                         وضعیت :
                                                         {% if class.stat == 0 %}
@@ -581,12 +623,13 @@
                                                         {% else %}
                                                         چرخشی
                                                         {% endif %}
-                                                        <br>
+                                                        </div>
 
+                                                        <div class="write-entry">
 
                                                         ورودی :
                                                         {{ class.entry.title }}
-                                                        <br>
+                                                        </div>
                                                     </div>
                                                     {% endif %}
                                                     {% endfor %}
@@ -606,6 +649,8 @@
                 </div>
                 <div class="card-footer text-bg-primary" dir="ltr">
                 </div>
+                {% endif %}
+
             </div>
 
         </main>
@@ -616,36 +661,15 @@
             $('.js-example-basic-multiple').select2();
             $('.js-example-basic-single').select2();
 
-            const Form = document.getElementById('schedule-form');
-            const SaveButton = document.getElementById('save-button');
-            const PreviewButton = document.getElementById('preview-button');
-            const DownloadButton = document.getElementById('download-button');
-
             const manually_select = document.getElementById('manually-select');
 
             const classes = document.getElementById('classes')
             const professors = document.getElementById('professors')
-            const educational_groups = document.getElementById('educational_groups')
+            const educational_groups = document.getElementById('groups')
             const entries = document.getElementById('entries')
             const status = document.getElementById('status')
 
-            SaveButton.addEventListener("click", () => {
-                Form.action = "#"
-                Form.method = 'POST'
-                Form.submit()
-            })
-
-            PreviewButton.addEventListener("click", () => {
-                Form.action = "#"
-                Form.method = 'GET'
-                Form.submit()
-            })
-
-            DownloadButton.addEventListener("click", () => {
-                Form.action = "#"
-                Form.method = 'GET'
-                Form.submit()
-            })
+            
 
             manually_select.addEventListener("click", () => {
                 classes.toggleAttribute("disabled");
@@ -655,6 +679,135 @@
                 status.toggleAttribute("disabled");
             })
         });
+
+        function filter_data() {
+            $("td > div").show();
+
+            if ($("#manually-select").is(':checked')) {
+                let classes = $("select#classes").val();
+                if (classes.length > 0) {
+                    $("td > div").each(function () {
+                        let flag = false;
+                        for (let i = 0; i < classes.length; i++) {
+                            if ($(this).children('.spanid').hasClass(`class_id-${classes[i]}`)) {
+                                flag = true;
+                                break;
+                            }                
+                        }
+                        if (flag == false) {
+                            $(this).hide();
+                        }
+                    });
+                }
+            } else {
+                let professors = $("select#professors").val();
+                if (professors.length > 0) {
+                    $("td > div").each(function () {
+                        let flag = false;
+                        for (let i = 0; i < professors.length; i++) {
+                            if ($(this).children('.spanid').hasClass(`teacher_id-${professors[i]}`)) {
+                                flag = true;
+                                break;
+                            }                
+                        }
+                        if (flag == false) {
+                            $(this).hide();
+                        }
+                    });
+                }
+
+                let groups = $("select#groups").val();
+                if (groups.length > 0) {
+                    $("td > div").each(function () {
+                        let flag = false;
+                        for (let i = 0; i < groups.length; i++) {
+                            if ($(this).children('.spanid').hasClass(`group_id-${groups[i]}`)) {
+                                flag = true;
+                                break;
+                            }                
+                        }
+                        if (flag == false) {
+                            $(this).hide();
+                        }
+                    });
+                }
+
+                let entries = $("select#entries").val();
+                if (entries.length > 0) {
+                    $("td > div").each(function () {
+                        let flag = false;
+                        for (let i = 0; i < entries.length; i++) {
+                            if ($(this).children('.spanid').hasClass(`entry_id-${entries[i]}`)) {
+                                flag = true;
+                                break;
+                            }                
+                        }
+                        if (flag == false) {
+                            $(this).hide();
+                        }
+                    });
+                }
+
+                let status = $("select#status").val();
+                if (status.length > 0) {
+                    $("td > div").each(function () {
+                        let flag = false;
+                        for (let i = 0; i < status.length; i++) {
+                            if ($(this).children('.spanid').hasClass(`status_id-${status[i]}`)) {
+                                flag = true;
+                                break;
+                            }                
+                        }
+                        if (flag == false) {
+                            $(this).hide();
+                        }
+                    });
+                }
+            }
+            
+            $("td select").next().show();
+
+            if (! $("#show_lesson_name").is(':checked')) {
+                $("td div div").each(function () {
+                    if ($(this).hasClass("write-course")) {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            if (! $("#show_professor_name").is(':checked')) {
+                $("td div div").each(function () {
+                    if ($(this).hasClass("write-teacher")) {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            if (! $("#show_status").is(':checked')) {
+                $("td div div").each(function () {
+                    if ($(this).hasClass("write-stat")) {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            if (! $("#show_eg_name").is(':checked')) {
+                $("td div div").each(function () {
+                    if ($(this).hasClass("write-group")) {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            if (! $("#show_entry_year").is(':checked')) {
+                $("td div div").each(function () {
+                    if ($(this).hasClass("write-entry")) {
+                        $(this).hide();
+                    }
+                });
+            }
+
+        }
     </script>
 </body>
 
