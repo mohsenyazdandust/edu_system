@@ -401,6 +401,12 @@ class CreateClassView(GetLinkInfoMixin, View):
         context["groups"] = models.Group.objects.all()
         context["courses"] = models.Course.objects.all()
         context["entries"] = models.Entry.objects.all()
+        classes = models.Class.objects.all()
+        if context['active_info']['term'] and context['active_info']['college']:
+            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college'])
+        else:
+            context['classes'] = False
+        
         return context
     
     def get(self, request, *args, **kwargs):

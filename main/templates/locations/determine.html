@@ -41,6 +41,11 @@
         .select2-selection {
             border: 0 !important;
         }
+
+        
+        hr:last-child {
+            display: none;
+        }
     </style>
 </head>
 
@@ -57,6 +62,11 @@
             </div>
             <div class="card col-11 col-md-9 mx-auto shadow px-0"
                 style="border-radius: 50px; overflow: hidden;height: max-content;">
+                {% if classes == False %}
+                <div class="alert alert-danger text-center" role="alert">
+                    ابتدا ترم و دانشکده را از بالای صفحه انتخاب کنید!
+                </div>
+                {% else %}
                 <div class="card-header px-4 text-bg-primary">
                     تعیین مکان کلاس ها </div>
                 <div class="card-body bg-primary-subtle">
@@ -321,6 +331,7 @@
                 </div>
                 <div class="card-footer text-bg-primary" dir="ltr">
                 </div>
+                {% endif %}
             </div>
 
         </main>
