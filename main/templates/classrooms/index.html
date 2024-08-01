@@ -37,6 +37,10 @@
         .select2-selection {
             border: 0 !important;
         }
+        
+        hr:last-child {
+            display: none;
+        }
     </style>
 </head>
 
@@ -51,9 +55,14 @@
                 style="border-radius: 50px 0 0 50px">
                 {% include "inc/menu.html" %}
             </div>
-
+            
             <div class="card col-11 col-md-9 mx-auto shadow px-0"
                 style="border-radius: 50px; overflow: hidden;height: max-content;">
+                {% if classes == False %}
+                <div class="alert alert-danger text-center" role="alert">
+                    ابتدا ترم و دانشکده را از بالای صفحه انتخاب کنید!
+                </div>
+                {% else %}
                 <div class="card-header px-4 text-bg-primary">
                     جدول کلاس ها
                 </div>
@@ -68,17 +77,13 @@
                         <br>
                         درصورت وجود نداشتن درس, استاد و ... مدنظر در لیست های
                         زیر به معنای عدم <a class="link-primary"
-                            href="../classrooms/create.html"> تعریف
+                            href="{% url 'main:add_class' %}"> تعریف
                             کلاس</a> برای آنهاست.
                     </div>
 
                     <form
                         class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mb-4"
                         action="#" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="_token"
-                            value="mApPRuA6P2iosNlaXq5OLzdMm7KJAgX0adkh8Uii"
-                            autocomplete="off">
-                        <input type="hidden" name="_method" value="post">
                         <div class="col">
                             <label for="classes" class="form-label">همه کلاس ها
                                 :</label>
@@ -86,15 +91,26 @@
                                 class="js-example-basic-multiple text-center"
                                 id="classes" multiple disabled>
                                 <option disabled>کلاس ها را انتخاب کنید</option>
-
-                                <option value="11">ریاضی محسنی (چهارشنبه 13-15)
+                                {% for class in classes %}
+                                <option value="{{ class.id }}">
+                                    {{ class.course.name }} {{ class.teacher.name }} (
+                                        {% if class.day == 0 %}
+                                            شنبه
+                                        {% elif class.day == 1 %}
+                                            یک شنبه
+                                        {% elif class.day == 2 %}
+                                            دو شنبه
+                                        {% elif class.day == 3 %}
+                                            سه شنبه
+                                        {% elif class.day == 4 %}
+                                            چهار شنبه
+                                        {% endif %}
+                                         {{ class.time.title }}
+                                    )                                    
                                 </option>
-                                <option value="10">تاریخ محمدی (شنبه 15.30-16)
-                                </option>
-                                <option value="8">ریاضی سلیمانی (سه شنبه
-                                    10.30-12)</option>
-                                <option value="9">شبکه محسنی (چهارشنبه 13-15)
-                                </option>
+                                
+                                {% endfor %}
+                                
                             </select>
                         </div>
 
@@ -106,9 +122,9 @@
                                 id="professors" multiple>
                                 <option disabled>اساتید را انتخاب کنید</option>
 
-                                <option value="1">محمدی</option>
-                                <option value="2">محسنی</option>
-                                <option value="3">سلیمانی</option>
+                                {% for teacher in teachers %}
+                                    <option value="{{ teacher.id }}">{{ teacher.name }}</option>
+                                {% endfor %}
                             </select>
                         </div>
 
@@ -118,12 +134,11 @@
                                 آموزشی :</label>
                             <select name="educational_groups[]"
                                 class="js-example-basic-multiple text-center"
-                                id="educational_groups" multiple>
+                                id="groups" multiple>
                                 <option disabled>گروه ها را انتخاب کنید</option>
-
-                                <option value="1">گروه کامپیوتر</option>
-                                <option value="2">گروه روانشناسی</option>
-                                <option value="3">گروه حسابداری</option>
+                                {% for group in groups %}
+                                <option value="{{ group.id }}">{{ group.title }}</option>
+                                {% endfor %}
                             </select>
                         </div>
 
@@ -135,8 +150,10 @@
                                 id="entries" multiple>
                                 <option disabled>کلاس ها را انتخاب کنید</option>
 
-                                <option value="1">1400</option>
-                                <option value="3">1402</option>
+                                {% for entry in entries %}
+                                <option value="{{ entry.id }}">{{ entry.title }}</option>
+
+                                {% endfor %}
                             </select>
                         </div>
 
@@ -147,8 +164,8 @@
                                 class="form-select text-center" id="status">
                                 <option value="" selected>وضعیت را انتخاب کنید
                                 </option>
-                                <option value="ثابت">ثابت</option>
-                                <option value="چرخشی">چرخشی</option>
+                                <option value="0">ثابت</option>
+                                <option value="1">چرخشی</option>
                             </select>
 
                             <div class="form-check form-switch mt-4">
@@ -165,18 +182,6 @@
                         <div class="col row row-cols-2 text-nowrap user-select-none mt-3"
                             style="font-size: 0.8rem !important">
                             <div class="col">
-                                <div class="form-check">
-                                    <input name="show_lesson_group"
-                                        id="show_lesson_group"
-                                        class="form-check-input" type="checkbox"
-                                        value="true" checked>
-                                    <label class="form-check-label"
-                                        style="margin-right: 25px"
-                                        for="show_lesson_group">
-                                        نمایش گروه درس
-                                    </label>
-                                </div>
-
                                 <div class="form-check">
                                     <input name="show_lesson_name"
                                         id="show_lesson_name"
@@ -239,15 +244,11 @@
                             </div>
                         </div>
 
-                        <button type="submit"
+                        <button type="button" onclick="filter_data()"
                             class="btn btn-success mx-auto mt-4">اعمال<i
                                 class="bi bi-check-lg"></i></button>
                     </form>
-                    {% if classes == False %}
-                    <div class="alert alert-danger text-center" role="alert">
-                        ابتدا ترم و دانشکده را از بالای صفحه انتخاب کنید!
-                    </div>
-                    {% else %}
+                    
                     <div class="table-responsive text-center">
                         <table
                             class="table table-bordered border-secondary rounded shadow-sm h-100">
@@ -281,6 +282,9 @@
                                         {% for class in classes %}
                                             
                                             {% if class.day == 0 and class.time == time %}
+                                            
+                                            <div>
+<span class="class_id-{{ class.id }} teacher_id-{{ class.teacher.id }} status_id-{{ class.stat }} group_id-{{ class.group.id }} entry_id-{{ class.entry.id }} spanid"></span>
                                             <select name="course[{{class.day}}-{{class.time.id}}]"
                                                     class="form-select form-select-sm text-center fs-6 mySelect2 rounded-0 border-0 js-example-basic-single">
                                                     {% for course in courses %}
@@ -333,7 +337,8 @@
                                                         حذف
                                                     </button>
                                                 </div>
-                                                <hr>
+                                                </div>
+<hr>
                                             
                                             {% endif %}
                                         {% endfor %}
@@ -350,7 +355,9 @@
                                             
                                             {% if class.day == 1 and class.time == time %}
                                             
-                                                <select name="course[{{class.day}}-{{class.time.id}}]"
+                                                <div>
+<span class="class_id-{{ class.id }} teacher_id-{{ class.teacher.id }} status_id-{{ class.stat }} group_id-{{ class.group.id }} entry_id-{{ class.entry.id }} spanid"></span>
+                                            <select name="course[{{class.day}}-{{class.time.id}}]"
                                                     class="form-select form-select-sm text-center fs-6 mySelect2 rounded-0 border-0 js-example-basic-single">
                                                     {% for course in courses %}
                                                     <option value="{{ course.id }}" {% if class.course == course %}selected{% endif %}>{{ course.name }}
@@ -403,7 +410,8 @@
                                                     </button>
                                                 </div>
 
-                                            <hr>
+                                            </div>
+<hr>
                                             
                                             {% endif %}
                                         {% endfor %}
@@ -420,7 +428,9 @@
                                             
                                             {% if class.day == 2 and class.time == time %}
                                             
-                                                <select name="course[{{class.day}}-{{class.time.id}}]"
+                                                <div>
+<span class="class_id-{{ class.id }} teacher_id-{{ class.teacher.id }} status_id-{{ class.stat }} group_id-{{ class.group.id }} entry_id-{{ class.entry.id }} spanid"></span>
+                                            <select name="course[{{class.day}}-{{class.time.id}}]"
                                                     class="form-select form-select-sm text-center fs-6 mySelect2 rounded-0 border-0 js-example-basic-single">
                                                     {% for course in courses %}
                                                     <option value="{{ course.id }}" {% if class.course == course %}selected{% endif %}>{{ course.name }}
@@ -473,7 +483,8 @@
                                                     </button>
                                                 </div>
 
-                                            <hr>
+                                            </div>
+<hr>
                                             
                                             {% endif %}
                                         {% endfor %}
@@ -490,7 +501,9 @@
                                             
                                             {% if class.day == 3 and class.time == time %}
                                             
-                                                <select name="course[{{class.day}}-{{class.time.id}}]"
+                                                <div>
+<span class="class_id-{{ class.id }} teacher_id-{{ class.teacher.id }} status_id-{{ class.stat }} group_id-{{ class.group.id }} entry_id-{{ class.entry.id }} spanid"></span>
+                                            <select name="course[{{class.day}}-{{class.time.id}}]"
                                                     class="form-select form-select-sm text-center fs-6 mySelect2 rounded-0 border-0 js-example-basic-single">
                                                     {% for course in courses %}
                                                     <option value="{{ course.id }}" {% if class.course == course %}selected{% endif %}>{{ course.name }}
@@ -543,7 +556,8 @@
                                                     </button>
                                                 </div>
 
-                                            <hr>
+                                            </div>
+<hr>
                                             {% endif %}
                                         {% endfor %}
                                             </td>
@@ -558,7 +572,9 @@
                                         {% for class in classes %}
                                             {% if class.day == 4 and class.time == time %}
                                             
-                                                <select name="course[{{class.day}}-{{class.time.id}}]"
+                                                <div>
+<span class="class_id-{{ class.id }} teacher_id-{{ class.teacher.id }} status_id-{{ class.stat }} group_id-{{ class.group.id }} entry_id-{{ class.entry.id }} spanid"></span>
+                                            <select name="course[{{class.day}}-{{class.time.id}}]"
                                                     class="form-select form-select-sm text-center fs-6 mySelect2 rounded-0 border-0 js-example-basic-single">
                                                     {% for course in courses %}
                                                     <option value="{{ course.id }}" {% if class.course == course %}selected{% endif %}>{{ course.name }}
@@ -611,7 +627,8 @@
                                                     </button>
                                                 </div>
 
-                                            <hr>
+                                            </div>
+<hr>
                                             {% endif %}
                                         {% endfor %}
                                             </td>
@@ -708,6 +725,134 @@
                 modalTitle.textContent = `حذف ${name}`
                 // modalBody.textContent = name
             })
+        }
+        function filter_data() {
+            $("td > div").show();
+
+            if ($("#manually-select").is(':checked')) {
+                let classes = $("select#classes").val();
+                if (classes.length > 0) {
+                    $("td > div").each(function () {
+                        let flag = false;
+                        for (let i = 0; i < classes.length; i++) {
+                            if ($(this).children('.spanid').hasClass(`class_id-${classes[i]}`)) {
+                                flag = true;
+                                break;
+                            }                
+                        }
+                        if (flag == false) {
+                            $(this).hide();
+                        }
+                    });
+                }
+            } else {
+                let professors = $("select#professors").val();
+                if (professors.length > 0) {
+                    $("td > div").each(function () {
+                        let flag = false;
+                        for (let i = 0; i < professors.length; i++) {
+                            if ($(this).children('.spanid').hasClass(`teacher_id-${professors[i]}`)) {
+                                flag = true;
+                                break;
+                            }                
+                        }
+                        if (flag == false) {
+                            $(this).hide();
+                        }
+                    });
+                }
+
+                let groups = $("select#groups").val();
+                if (groups.length > 0) {
+                    $("td > div").each(function () {
+                        let flag = false;
+                        for (let i = 0; i < groups.length; i++) {
+                            if ($(this).children('.spanid').hasClass(`group_id-${groups[i]}`)) {
+                                flag = true;
+                                break;
+                            }                
+                        }
+                        if (flag == false) {
+                            $(this).hide();
+                        }
+                    });
+                }
+
+                let entries = $("select#entries").val();
+                if (entries.length > 0) {
+                    $("td > div").each(function () {
+                        let flag = false;
+                        for (let i = 0; i < entries.length; i++) {
+                            if ($(this).children('.spanid').hasClass(`entry_id-${entries[i]}`)) {
+                                flag = true;
+                                break;
+                            }                
+                        }
+                        if (flag == false) {
+                            $(this).hide();
+                        }
+                    });
+                }
+
+                let status = $("select#status").val();
+                if (status.length > 0) {
+                    $("td > div").each(function () {
+                        let flag = false;
+                        for (let i = 0; i < status.length; i++) {
+                            if ($(this).children('.spanid').hasClass(`status_id-${status[i]}`)) {
+                                flag = true;
+                                break;
+                            }                
+                        }
+                        if (flag == false) {
+                            $(this).hide();
+                        }
+                    });
+                }
+            }
+            
+            $("td select").next().show();
+
+            if (! $("#show_lesson_name").is(':checked')) {
+                $("td select").each(function () {
+                    if ($(this).attr("name").includes("course")) {
+                        $(this).next().hide();
+                    }
+                });
+            }
+
+            if (! $("#show_professor_name").is(':checked')) {
+                $("td select").each(function () {
+                    if ($(this).attr("name").includes("teacher")) {
+                        $(this).next().hide();
+                    }
+                });
+            }
+
+            if (! $("#show_status").is(':checked')) {
+                $("td select").each(function () {
+                    if ($(this).attr("name").includes("stat")) {
+                        $(this).next().hide();
+                    }
+                });
+            }
+
+            if (! $("#show_eg_name").is(':checked')) {
+                $("td select").each(function () {
+                    if ($(this).attr("name").includes("group")) {
+                        $(this).next().hide();
+                    }
+                });
+            }
+
+            if (! $("#show_entry_year").is(':checked')) {
+                $("td select").each(function () {
+                    if ($(this).attr("name").includes("entry")) {
+                        $(this).next().hide();
+                    }
+                });
+            }
+
         }
     </script>
 </body>
