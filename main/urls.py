@@ -62,5 +62,7 @@ urlpatterns = [
     path('locations/delete/<int:pk>/', DeleteLocationView.as_view(), name="delete_location"),
     path('locations/update/<int:pk>/', UpdateLocationView.as_view(), name="update_location"),
     path('locations/determine/', DetermineClassLocationView.as_view(), name="determine_location"),
+    # SCHEDULE
+    path('location/', ScheduleListView.as_view(), name="schedule"),
     
 ]

@@ -557,3 +557,17 @@ class DetermineClassLocationView(GetLinkInfoMixin, View):
                 pass
         return redirect(reverse_lazy('main:determine_location'))
         
+
+# SCHEDULE
+
+class ScheduleListView(GetLinkInfoMixin, TemplateView):
+    template_name = "schedule/index.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["classes"] = models.Class.objects.all()
+        context["times"] = models.Timing.objects.all()
+        context["locations"] = models.Location.objects.all()
+        
+        return context
