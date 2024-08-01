@@ -275,12 +275,13 @@
                                         <th class="text-center align-middle fw-normal text-nowrap"
                                             scope="row">شنبه</th>
                                         {% for time in times %}
+                                        <td
+                                                class="fw-normal text-center align-middle px-0">
+                                                
                                         {% for class in classes %}
                                             
                                             {% if class.day == 0 and class.time == time %}
-                                            <td
-                                                class="fw-normal text-center align-middle px-0">
-                                                <select name="course[{{class.day}}-{{class.time.id}}]"
+                                            <select name="course[{{class.day}}-{{class.time.id}}]"
                                                     class="form-select form-select-sm text-center fs-6 mySelect2 rounded-0 border-0 js-example-basic-single">
                                                     {% for course in courses %}
                                                     <option value="{{ course.id }}" {% if class.course == course %}selected{% endif %}>{{ course.name }}
@@ -332,25 +333,23 @@
                                                         حذف
                                                     </button>
                                                 </div>
-
-                                            </td>
-                                            {% elif forloop.counter == classes|length %}
-                                            <td
-                                                class="fw-normal text-center align-middle px-0">
-                                            </td>
+                                                <hr>
+                                            
                                             {% endif %}
                                         {% endfor %}
+                                            </td>
                                         {% endfor %}
                                     </tr>
                                     <tr>
                                         <th class="text-center align-middle fw-normal text-nowrap"
                                             scope="row">یک شنبه</th>
                                         {% for time in times %}
+                                        <td
+                                                class="fw-normal text-center align-middle px-0">
                                         {% for class in classes %}
                                             
                                             {% if class.day == 1 and class.time == time %}
-                                            <td
-                                                class="fw-normal text-center align-middle px-0">
+                                            
                                                 <select name="course[{{class.day}}-{{class.time.id}}]"
                                                     class="form-select form-select-sm text-center fs-6 mySelect2 rounded-0 border-0 js-example-basic-single">
                                                     {% for course in courses %}
@@ -404,24 +403,23 @@
                                                     </button>
                                                 </div>
 
-                                            </td>
-                                            {% elif forloop.counter == classes|length %}
-                                            <td
-                                                class="fw-normal text-center align-middle px-0">
-                                            </td>
+                                            <hr>
+                                            
                                             {% endif %}
                                         {% endfor %}
+                                            </td>
                                         {% endfor %}
                                     </tr>
                                     <tr>
                                         <th class="text-center align-middle fw-normal text-nowrap"
                                             scope="row">دو شنبه</th>
                                         {% for time in times %}
+                                        <td
+                                                class="fw-normal text-center align-middle px-0">
                                         {% for class in classes %}
                                             
                                             {% if class.day == 2 and class.time == time %}
-                                            <td
-                                                class="fw-normal text-center align-middle px-0">
+                                            
                                                 <select name="course[{{class.day}}-{{class.time.id}}]"
                                                     class="form-select form-select-sm text-center fs-6 mySelect2 rounded-0 border-0 js-example-basic-single">
                                                     {% for course in courses %}
@@ -475,24 +473,23 @@
                                                     </button>
                                                 </div>
 
-                                            </td>
-                                            {% elif forloop.counter == classes|length %}
-                                            <td
-                                                class="fw-normal text-center align-middle px-0">
-                                            </td>
+                                            <hr>
+                                            
                                             {% endif %}
                                         {% endfor %}
+                                            </td>
                                         {% endfor %}
                                     </tr>
                                     <tr>
                                         <th class="text-center align-middle fw-normal text-nowrap"
                                             scope="row">سه شنبه</th>
                                         {% for time in times %}
+                                        <td
+                                                class="fw-normal text-center align-middle px-0">
                                         {% for class in classes %}
                                             
                                             {% if class.day == 3 and class.time == time %}
-                                            <td
-                                                class="fw-normal text-center align-middle px-0">
+                                            
                                                 <select name="course[{{class.day}}-{{class.time.id}}]"
                                                     class="form-select form-select-sm text-center fs-6 mySelect2 rounded-0 border-0 js-example-basic-single">
                                                     {% for course in courses %}
@@ -546,23 +543,21 @@
                                                     </button>
                                                 </div>
 
-                                            </td>
-                                            {% elif forloop.counter == classes|length %}
-                                            <td
-                                                class="fw-normal text-center align-middle px-0">
-                                            </td>
+                                            <hr>
                                             {% endif %}
                                         {% endfor %}
+                                            </td>
                                         {% endfor %}
                                     </tr>
                                     <tr>
                                         <th class="text-center align-middle fw-normal text-nowrap"
                                             scope="row"> چهار شنبه</th>
                                         {% for time in times %}
+                                        <td
+                                                class="fw-normal text-center align-middle px-0">
                                         {% for class in classes %}
                                             {% if class.day == 4 and class.time == time %}
-                                            <td
-                                                class="fw-normal text-center align-middle px-0">
+                                            
                                                 <select name="course[{{class.day}}-{{class.time.id}}]"
                                                     class="form-select form-select-sm text-center fs-6 mySelect2 rounded-0 border-0 js-example-basic-single">
                                                     {% for course in courses %}
@@ -616,13 +611,10 @@
                                                     </button>
                                                 </div>
 
-                                            </td>
-                                            {% elif forloop.counter == classes|length %}
-                                            <td
-                                                class="fw-normal text-center align-middle px-0">
-                                            </td>
+                                            <hr>
                                             {% endif %}
                                         {% endfor %}
+                                            </td>
                                         {% endfor %}
                                     </tr>
                                     
