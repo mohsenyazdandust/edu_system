@@ -21,6 +21,7 @@ from .forms import (
     CreateTeacherForm,
     CreateEntryForm,
     CreateTimingForm,
+    CreateLocationForm,
 )
 
 from . import models
@@ -485,3 +486,74 @@ class DeleteClassView(GetLinkInfoMixin, DeleteView):
     def get_success_url(self):
         return reverse_lazy('main:classes') 
     
+
+# LOCATION
+
+class LocationListView(GetLinkInfoMixin, ListView):
+    model = models.Location
+    context_object_name = "locations"
+    template_name = "locations/index.html"
+
+
+class CreateLocationView(GetLinkInfoMixin, CreateView):
+    model = models.Location    
+    template_name = 'locations/create.html'
+    form_class = CreateLocationForm
+    
+    def get_success_url(self):
+        return reverse_lazy('main:locations') 
+    
+
+class DeleteLocationView(GetLinkInfoMixin, DeleteView):
+    model = models.Location
+    
+    def get_success_url(self):
+        return reverse_lazy('main:locations') 
+    
+
+class UpdateLocationView(GetLinkInfoMixin, UpdateView):
+    model = models.Location
+    template_name = "locations/create.html"
+    form_class = CreateLocationForm
+    context_object_name = "location"
+        
+    def get_success_url(self):
+        return reverse_lazy('main:locations') 
+
+
+class DetermineClassLocationView(GetLinkInfoMixin, View):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["times"] = models.Timing.objects.all()
+        context["teachers"] = models.Teacher.objects.all()
+        context["groups"] = models.Group.objects.all()
+        context["courses"] = models.Course.objects.all()
+        context["entries"] = models.Entry.objects.all()
+        classes = models.Class.objects.all()
+        if context['active_info']['term'] and context['active_info']['college']:
+            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college'])
+        else:
+            context['classes'] = False
+        context['locations'] = models.Location.objects.all()
+        return context
+    
+    def get(self, request, *args, **kwargs):
+        return render(request, 'locations/determine.html', self.get_context_data(**kwargs))
+    
+    def post(self, request, *args, **kwargs):
+        for class_str in request.POST.keys():
+            try:
+                class_id = class_str.split("-")[-1]
+                class_id = int(class_id)
+                the_class = models.Class.objects.get(id=class_id)
+                
+                location_id = request.POST.get(class_str)
+                if location_id == '':
+                    the_class.location = None
+                else:
+                    the_class.location_id = int(location_id)
+                the_class.save()
+            except:
+                pass
+        return redirect(reverse_lazy('main:determine_location'))
+        

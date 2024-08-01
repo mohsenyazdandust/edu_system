@@ -59,3 +59,9 @@ class CreateTimingForm(forms.ModelForm):
     class Meta:
         model = Timing
         fields = ['title']
+
+
+class CreateLocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        fields = ['title']

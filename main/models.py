@@ -52,11 +52,15 @@ class Class(Linker):
     stat = models.IntegerField(default=0)
     group = models.ForeignKey('main.Group', on_delete=models.SET_NULL, null=True, blank=True)
     entry = models.ForeignKey('main.Entry', on_delete=models.SET_NULL, null=True, blank=True)
-
+    location = models.ForeignKey('main.Location', on_delete=models.SET_NULL, null=True, blank=True)
 
 class Entry(models.Model):
     title = models.CharField(max_length=100)
     
 
 class Timing(models.Model):
+    title = models.CharField(max_length=100)
+    
+
+class Location(models.Model):
     title = models.CharField(max_length=100)

@@ -56,5 +56,11 @@ urlpatterns = [
     path('classes/', ClassListView.as_view(), name="classes"),
     path('classes/add/', CreateClassView.as_view(), name="add_class"),
     path('classes/delete/<int:pk>/', DeleteClassView.as_view(), name="delete_class"),
+    # TIMING
+    path('locations/', LocationListView.as_view(), name="locations"),
+    path('locations/add/', CreateLocationView.as_view(), name="add_location"),
+    path('locations/delete/<int:pk>/', DeleteLocationView.as_view(), name="delete_location"),
+    path('locations/update/<int:pk>/', UpdateLocationView.as_view(), name="update_location"),
+    path('locations/determine/', DetermineClassLocationView.as_view(), name="determine_location"),
     
 ]

@@ -336,7 +336,7 @@
                     </div>
                 </li>
 
-                {% comment %} <li class="d-md-none mb-1">
+                <li class="d-md-none mb-1">
                     <button
                         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                         data-bs-toggle="collapse"
@@ -348,21 +348,21 @@
                     <div class="collapse" id="location-collapse">
                         <ul
                             class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="./locations/index.html"
+                            <li><a href="{% url 'main:locations' %}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
                                         class="bi bi-chevron-left"></i>همه</a>
                             </li>
-                            <li><a href="./locations/create.html"
+                            <li><a href="{% url 'main:add_location' %}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
                                         class="bi bi-chevron-left"></i>ایجاد</a>
                             </li>
-                            <li><a href="./locations/determine.html"
+                            <li><a href="{% url 'main:determine_location' %}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white text-nowrap my-2"><i
                                         class="bi bi-chevron-left"></i>تعیین
                                     مکان کلاس ها</a></li>
                         </ul>
                     </div>
-                </li> {% endcomment %}
+                </li>
 
                 {% comment %} <li class="d-md-none mb-1">
                     <a href="./schedule/index.html"
