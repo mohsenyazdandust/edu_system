@@ -191,7 +191,7 @@ class UpdateCollegeView(GetLinkInfoMixin, UpdateView):
 
 # TERMS
 
-class CollegeTermView(GetLinkInfoMixin, ListView):
+class TermListView(GetLinkInfoMixin, ListView):
     model = models.Term
     context_object_name = "terms"
     template_name = "terms/index.html"
@@ -225,7 +225,7 @@ class UpdateTermView(GetLinkInfoMixin, UpdateView):
 
 # GROUPS
 
-class CollegeGroupView(GetLinkInfoMixin, ListView):
+class GroupListView(GetLinkInfoMixin, ListView):
     model = models.Group
     context_object_name = "groups"
     template_name = "educational-groups/index.html"
@@ -259,7 +259,7 @@ class UpdateGroupView(GetLinkInfoMixin, UpdateView):
 
 # COURSES
 
-class CollegeCourseView(GetLinkInfoMixin, ListView):
+class CourseListView(GetLinkInfoMixin, ListView):
     model = models.Course
     context_object_name = "courses"
     template_name = "lessons/index.html"
@@ -292,7 +292,7 @@ class UpdateCourseView(GetLinkInfoMixin, UpdateView):
 
 # COURSES
 
-class CollegeTeacherView(GetLinkInfoMixin, ListView):
+class TeacherListView(GetLinkInfoMixin, ListView):
     model = models.Teacher
     context_object_name = "teachers"
     template_name = "professors/index.html"
@@ -325,7 +325,7 @@ class UpdateTeacherView(GetLinkInfoMixin, UpdateView):
     
 # ENTRY
 
-class CollegeEntryView(GetLinkInfoMixin, ListView):
+class EntryListView(GetLinkInfoMixin, ListView):
     model = models.Entry
     context_object_name = "entries"
     template_name = "entries/index.html"
@@ -359,7 +359,7 @@ class UpdateEntryView(GetLinkInfoMixin, UpdateView):
 
 # TIMING
 
-class CollegeTimingView(GetLinkInfoMixin, ListView):
+class TimingListView(GetLinkInfoMixin, ListView):
     model = models.Timing
     context_object_name = "times"
     template_name = "time-periods/index.html"
@@ -389,3 +389,99 @@ class UpdateTimingView(GetLinkInfoMixin, UpdateView):
         
     def get_success_url(self):
         return reverse_lazy('main:times') 
+
+# CLASSES
+
+class CreateClassView(GetLinkInfoMixin, View):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["times"] = models.Timing.objects.all()
+        context["teachers"] = models.Teacher.objects.all()
+        context["groups"] = models.Group.objects.all()
+        context["courses"] = models.Course.objects.all()
+        context["entries"] = models.Entry.objects.all()
+        return context
+    
+    def get(self, request, *args, **kwargs):
+        return render(request, 'classrooms/create.html', self.get_context_data(**kwargs))
+    
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        linked_term=context['active_info']['term']
+        linked_college=context['active_info']['college']
+        
+        for i in range(5):
+            for time in context['times']:
+                new_class = models.Class(
+                    day=i,
+                    time=time,
+                    course_id=request.POST.get(f'course[{i}-{time.id}]'),
+                    teacher_id=request.POST.get(f'teacher[{i}-{time.id}]'),
+                    stat=request.POST.get(f'stat[{i}-{time.id}]'),
+                    group_id=request.POST.get(f'group[{i}-{time.id}]'),
+                    entry_id=request.POST.get(f'entry[{i}-{time.id}]'),
+                )
+                if linked_term:
+                    new_class.linked_term = linked_term
+                    
+                if linked_college:
+                    new_class.linked_college = linked_college
+
+                try:
+                    new_class.save()
+                except:
+                    pass
+                
+        return redirect(reverse_lazy("main:classes"))
+
+class ClassListView(GetLinkInfoMixin, View):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["times"] = models.Timing.objects.all()
+        context["teachers"] = models.Teacher.objects.all()
+        context["groups"] = models.Group.objects.all()
+        context["courses"] = models.Course.objects.all()
+        context["entries"] = models.Entry.objects.all()
+        classes = models.Class.objects.all()
+        if context['active_info']['term'] and context['active_info']['college']:
+            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college'])
+        else:
+            context['classes'] = False
+
+        return context
+    
+    def get(self, request, *args, **kwargs):
+        return render(request, 'classrooms/index.html', self.get_context_data(**kwargs))
+    
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        linked_term = context['active_info']['term']
+        linked_college = context['active_info']['college']
+
+        for i in range(5):
+            for time in context['times']:
+                try:
+                    old_class = models.Class.objects.get(
+                        day=i,
+                        time=time,
+                        linked_term=linked_term,
+                        linked_college=linked_college,
+                    )
+                    old_class.course_id = request.POST.get(f'course[{i}-{time.id}]')
+                    old_class.teacher_id = request.POST.get(f'teacher[{i}-{time.id}]')
+                    old_class.stat = request.POST.get(f'stat[{i}-{time.id}]')
+                    old_class.group_id = request.POST.get(f'group[{i}-{time.id}]')
+                    old_class.entry_id = request.POST.get(f'entry[{i}-{time.id}]')
+                    old_class.save()
+                except:
+                    pass
+                
+        return redirect(reverse_lazy('main:classes'))
+    
+
+class DeleteClassView(GetLinkInfoMixin, DeleteView):
+    model = models.Class
+    
+    def get_success_url(self):
+        return reverse_lazy('main:classes') 
+    

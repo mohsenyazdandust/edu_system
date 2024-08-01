@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-class Linker:
+class Linker(models.Model):
     linked_term = models.ForeignKey('main.Term', on_delete=models.SET_NULL, null=True, blank=True)
     linked_college = models.ForeignKey('main.College', on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -44,8 +44,14 @@ class Classroom(models.Model):
     number = models.CharField(max_length=10)
     
 
-class Class(models.Model):
-    pass
+class Class(Linker):
+    time = models.ForeignKey('main.Timing', on_delete=models.SET_NULL, null=True, blank=True)
+    day = models.IntegerField(default=0)
+    course = models.ForeignKey('main.Course', on_delete=models.SET_NULL, null=True, blank=True)
+    teacher = models.ForeignKey('main.Teacher', on_delete=models.SET_NULL, null=True, blank=True)
+    stat = models.IntegerField(default=0)
+    group = models.ForeignKey('main.Group', on_delete=models.SET_NULL, null=True, blank=True)
+    entry = models.ForeignKey('main.Entry', on_delete=models.SET_NULL, null=True, blank=True)
 
 
 class Entry(models.Model):

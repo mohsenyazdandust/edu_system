@@ -312,7 +312,7 @@
                     </div>
                 </li>
 
-                {% comment %} <li class="d-md-none mb-1">
+                <li class="d-md-none mb-1">
                     <button
                         class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
                         data-bs-toggle="collapse"
@@ -324,17 +324,17 @@
                     <div class="collapse" id="class-collapse">
                         <ul
                             class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="./classrooms/index.html"
+                            <li><a href="{% url 'main:classes' %}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
                                         class="bi bi-chevron-left"></i>جدول
                                     کلاس ها</a></li>
-                            <li><a href="./classrooms/create.html"
+                            <li><a href="{% url 'main:add_class' %}"
                                     class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
                                         class="bi bi-chevron-left"></i>تعریف
                                     کلاس</a></li>
                         </ul>
                     </div>
-                </li> {% endcomment %}
+                </li>
 
                 {% comment %} <li class="d-md-none mb-1">
                     <button
