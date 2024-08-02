@@ -9,7 +9,7 @@ class GetLinkInfoMixin:
         except:
             context = {}
         
-        if (self.request.user.access_level != 0):
+        if (self.request.user.access_level == 2):
             colleges = [self.request.user.college, ]
         else:
             colleges = models.College.objects.all()
@@ -26,7 +26,7 @@ class GetLinkInfoMixin:
         if active_term:
             active_term = models.Term.objects.get(id=active_term)
         
-        if (self.request.user.access_level != 0):
+        if (self.request.user.access_level == 2):
             active_college = self.request.user.college
         else:
             if self.request.session.has_key('active_college'):
