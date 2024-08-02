@@ -57,7 +57,10 @@ class LinkInfoView(View):
             else:
                 request.session['active_college'] = active_college
         
-        return redirect(request.META.get('HTTP_REFERER'))
+        try:
+            return redirect(request.META.get('HTTP_REFERER'))
+        except:
+            return redirect("/")
         
 
 # AUTH
@@ -426,21 +429,24 @@ class CreateClassView(GetLinkInfoMixin, View):
         
         for i in range(5):
             for time in context['times']:
-                new_class = models.Class(
-                    day=i,
-                    time=time,
-                    course_id=request.POST.get(f'course[{i}-{time.id}]'),
-                    teacher_id=request.POST.get(f'teacher[{i}-{time.id}]'),
-                    stat=request.POST.get(f'stat[{i}-{time.id}]'),
-                    group_id=request.POST.get(f'group[{i}-{time.id}]'),
-                    entry_id=request.POST.get(f'entry[{i}-{time.id}]'),
-                )
-                if linked_term:
-                    new_class.linked_term = linked_term
-                    
-                if linked_college:
-                    new_class.linked_college = linked_college
-
+                try:
+                    new_class = models.Class(
+                        day=i,
+                        time=time,
+                        course_id=request.POST.get(f'course[{i}-{time.id}]'),
+                        teacher_id=request.POST.get(f'teacher[{i}-{time.id}]'),
+                        stat=request.POST.get(f'stat[{i}-{time.id}]'),
+                        group_id=request.POST.get(f'group[{i}-{time.id}]'),
+                        entry_id=request.POST.get(f'entry[{i}-{time.id}]'),
+                    )
+                    if linked_term:
+                        new_class.linked_term = linked_term
+                        
+                    if linked_college:
+                        new_class.linked_college = linked_college
+                except:
+                    continue
+                
                 try:
                     new_class.save()
                 except:
