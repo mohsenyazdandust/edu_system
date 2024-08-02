@@ -135,20 +135,31 @@
 
                                     </th>
 
-                                    {% comment %} 1 (shode) {% endcomment %}
                                     <td class="text-center align-middle">
-                                        1403-01-25
-                                        <br>
-                                        1403-04-23
-                                        <br>
+                                        {% for p in class.panda_set.all %}
+                                            {% if p.stat == 1 %}
+                                                {{ p.date }}
+                                                <br>
+                                            {% endif %}
+                                        {% endfor %}
                                     </td>
 
-                                    {% comment %} 0 (nashode) {% endcomment %}
                                     <td class="text-center align-middle">
+                                        {% for p in class.panda_set.all %}
+                                            {% if p.stat == 0 %}
+                                                {{ p.date }}
+                                                <br>
+                                            {% endif %}
+                                        {% endfor %}
                                     </td>
 
-                                    {% comment %} -1 (khali) {% endcomment %}
                                     <td class="text-center align-middle">
+                                        {% for p in class.panda_set.all %}
+                                            {% if p.stat == -1 %}
+                                                {{ p.date }}
+                                                <br>
+                                            {% endif %}
+                                        {% endfor %}
                                     </td>
                                 </tr>
                                 {% endfor %}

@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 
 from django.contrib.auth import get_user_model
 
-# from braces.views import AnonymousRequiredMixin, LoginRequiredMixin, StaffuserRequiredMixin
+import jdatetime
 
 from .forms import (
     CreateUserForm,
@@ -596,18 +596,66 @@ class SubmitPandAView(GetLinkInfoMixin, View):
         
         context["times"] = models.Timing.objects.all()
         context["locations"] = models.Location.objects.all()
-        context['dates'] = [
-            {'name': 'شنبه', 'num': 0},
-            {'name': 'یک شنبه', 'num': 1},
-            {'name': 'دو شنبه', 'num': 2},
-            {'name': 'سه شنبه', 'num': 3},
-            {'name': 'چهار شنبه', 'num': 4},
-        ]
+        
+        s_date_y = self.request.GET.get('year', False)
+        s_date_m = self.request.GET.get('month', False)
+        s_date_d = self.request.GET.get('day', False)
+        
+        if s_date_y and s_date_m and s_date_d:
+            today = jdatetime.date(int(s_date_y), int(s_date_m), int(s_date_d))
+        else:
+            today = jdatetime.date.today()
+        
+        toweek = today.weekday()
+        
+        dates = []
+        week = ['شنبه', 'یک شنبه', 'دو شنبه', 'سه شنبه', 'چهار شنبه', '0', '0']
+        for i in range(toweek):
+            dates.append({
+                'date': today - jdatetime.timedelta(days=toweek-i),  
+                'name': week[i],
+                'num': i,
+            })
+        
+        for i in range(toweek, 5):
+            dates.append({
+                'date': today + jdatetime.timedelta(days=i-toweek),  
+                'name': week[i],
+                'num': i,
+            })
+        
+        context['dates'] = dates[:5]
+        context['today'] = today
             
         return context
     
     def get(self, request, *args, **kwargs):
         return render(request, 'presence-and-absence/index.html', self.get_context_data(**kwargs))
+    
+    def post(self, request, *args, **kwargs):
+        for class_str in request.POST.keys():
+            try:
+                class_id = class_str.split("_")[0]
+                class_id = int(class_id)
+                the_class = models.Class.objects.get(id=class_id)
+                
+                date = class_str.split("_")[-1]
+                jdatetime.datetime.strptime(date, '%Y-%m-%d').date()
+                
+                stat = request.POST.get(class_str)
+                stat = int(stat)
+                
+                p_and_a = models.PandA.objects.get_or_create(
+                    theclass=the_class,
+                    date=date,  
+                )[0]
+                
+                p_and_a.stat = stat
+                p_and_a.save()
+            except Exception as e:
+                print(e)
+            
+        return redirect(reverse_lazy("main:p_and_a"))
     
     
 class PandAListView(GetLinkInfoMixin, TemplateView):
@@ -624,5 +672,8 @@ class PandAListView(GetLinkInfoMixin, TemplateView):
         
         context["times"] = models.Timing.objects.all()
         context["locations"] = models.Location.objects.all()
+        
+        c = models.Class.objects.get(id=6)
+        print(c.panda_set.all())
         
         return context

@@ -81,15 +81,15 @@
                             <input name="day" type="number"
                                 class="form-control h-100 ms-1"
                                 style="width: 4rem" placeholder="روز" min="1"
-                                max="31" value="25" required>
+                                max="31" value="{{ today.day }}" required>
                             <input name="month" type="number"
                                 class="form-control h-100 ms-1"
                                 style="width: 4rem" placeholder="ماه" min="1"
-                                max="12" value="4" required>
+                                max="12" value="{{ today.month }}" required>
                             <input name="year" type="number"
                                 class="form-control h-100 ms-2"
                                 style="width: 6rem" placeholder="سال" min="1350"
-                                value="1403" required>
+                                value="{{ today.year }}" required>
                         </div>
                     </form>
 
@@ -140,7 +140,7 @@
                                             scope="row">
                                             {{ date.name }}
                                             <br>
-                                            1403-04-23
+                                            {{ date.date }}
                                         </th>
                                         <td class="p-0 table-responsive"
                                             colspan="5">
@@ -170,20 +170,29 @@
     
     
                                                                 <select
-                                                                    name="status[#BYID]"
+                                                                    name="{{class.id}}_{{date.date}}"
                                                                     class="form-select form-select-sm mySelect2 rounded-0 js-example-basic-single text-center my-2 mx-auto w-75">
                                                                     <option>
                                                                     </option>
                                                                     <option
                                                                         value="1"
-                                                                        "#BYDB">
+                                                                        {% for p in class.panda_set.all %}
+                                                                            {% if p.date == date.date and p.stat == 1 %}selected{% endif %}
+                                                                        {% endfor %}
+                                                                        >
                                                                         تشکیل شده
                                                                     </option>
                                                                     <option
+                                                                        {% for p in class.panda_set.all %}
+                                                                            {% if p.date == date.date and p.stat == 0 %}selected{% endif %}
+                                                                        {% endfor %}
                                                                         value="0">
                                                                         تشکیل نشده
                                                                     </option>
                                                                     <option
+                                                                        {% for p in class.panda_set.all %}
+                                                                            {% if p.date == date.date and p.stat == -1 %}selected{% endif %}
+                                                                        {% endfor %}
                                                                         value="-1">
                                                                         خالی
                                                                     </option>

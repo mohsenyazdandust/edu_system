@@ -1,5 +1,8 @@
 from django.db import models
 
+from django_jalali.db import models as jmodels
+
+
 from django.contrib.auth.models import AbstractUser
 
 
@@ -64,3 +67,9 @@ class Timing(models.Model):
 
 class Location(models.Model):
     title = models.CharField(max_length=100)
+    
+    
+class PandA(models.Model):
+    theclass = models.ForeignKey('main.Class', on_delete=models.SET_NULL, null=True, blank=True)
+    date = jmodels.jDateField()
+    stat = models.IntegerField(default=0)
