@@ -64,5 +64,8 @@ urlpatterns = [
     path('locations/determine/', DetermineClassLocationView.as_view(), name="determine_location"),
     # SCHEDULE
     path('location/', ScheduleListView.as_view(), name="schedule"),
+    # PandA
+    path('presence/', SubmitPandAView.as_view(), name="p_and_a"),
+    path('presence/log/', PandAListView.as_view(), name="logs_p_and_a"),
     
 ]

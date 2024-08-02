@@ -582,3 +582,47 @@ class ScheduleListView(GetLinkInfoMixin, TemplateView):
         context["locations"] = models.Location.objects.all()
         
         return context
+    
+    
+class SubmitPandAView(GetLinkInfoMixin, View):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        classes = models.Class.objects.all()
+        if context['active_info']['term'] and context['active_info']['college']:
+            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college'])
+        else:
+            context['classes'] = False
+        
+        context["times"] = models.Timing.objects.all()
+        context["locations"] = models.Location.objects.all()
+        context['dates'] = [
+            {'name': 'شنبه', 'num': 0},
+            {'name': 'یک شنبه', 'num': 1},
+            {'name': 'دو شنبه', 'num': 2},
+            {'name': 'سه شنبه', 'num': 3},
+            {'name': 'چهار شنبه', 'num': 4},
+        ]
+            
+        return context
+    
+    def get(self, request, *args, **kwargs):
+        return render(request, 'presence-and-absence/index.html', self.get_context_data(**kwargs))
+    
+    
+class PandAListView(GetLinkInfoMixin, TemplateView):
+    template_name = "presence-and-absence/history.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        classes = models.Class.objects.all()
+        if context['active_info']['term'] and context['active_info']['college']:
+            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college'])
+        else:
+            context['classes'] = False
+        
+        context["times"] = models.Timing.objects.all()
+        context["locations"] = models.Location.objects.all()
+        
+        return context
