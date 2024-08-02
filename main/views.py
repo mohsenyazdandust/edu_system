@@ -692,7 +692,4 @@ class PandAListView(GetLinkInfoMixin, TemplateView):
         context["times"] = models.Timing.objects.all()
         context["locations"] = models.Location.objects.all()
         
-        c = models.Class.objects.get(id=6)
-        print(c.panda_set.all())
-        
         return context

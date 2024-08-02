@@ -114,6 +114,11 @@
                                         <i class="bi bi-slash-circle"></i> کلاس
                                         خالی
                                     </th>
+                                    <th
+                                        class="text-center align-middle fw-normal text-primary">
+                                        <i class="bi bi-info-circle"></i> 
+                                        مجموع تشکیل شده
+                                    </th>
                                 </tr>
                             </thead>
 
@@ -161,6 +166,8 @@
                                             {% endif %}
                                         {% endfor %}
                                     </td>
+                                    <td class="text-center align-middle count">
+                                    </td>
                                 </tr>
                                 {% endfor %}
 
@@ -177,5 +184,11 @@
     </div>
 
 </body>
+<script>
+    $(".count").each(function (index) {
+        let count = $(this).parent().children("td:nth-child(2)")[0].getElementsByTagName('br').length;
+        $(this).text(count);
+    })
 
+</script>
 </html>
