@@ -102,7 +102,7 @@ class DashboardView(GetLinkInfoMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         context["classes"] = len(models.Class.objects.all())
-        context["classrooms"] = len(models.Classroom.objects.all())
+        context["classrooms"] = len(models.Location.objects.all())
         context["courses"] = len(models.Course.objects.all())
         context["entries"] = len(models.Entry.objects.all())
         context["teachers"] = len(models.Teacher.objects.all())

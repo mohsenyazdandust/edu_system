@@ -41,11 +41,7 @@ class Term(models.Model):
 class Group(models.Model):
     title = models.CharField(max_length=100)
     short = models.CharField(max_length=10)
-    
-    
-class Classroom(models.Model):
-    number = models.CharField(max_length=10)
-    
+
 
 class Class(Linker):
     time = models.ForeignKey('main.Timing', on_delete=models.SET_NULL, null=True, blank=True)
