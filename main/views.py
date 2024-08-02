@@ -117,6 +117,13 @@ class UserListView(GetLinkInfoMixin, ListView):
     model = User
     context_object_name = "users"
     template_name = "users/index.html"
+    
+    def get_queryset(self):
+        data = super().get_queryset()
+        data = data.exclude(access_level=0)
+        
+        return data
+    
 
 
 class CreateUserView(GetLinkInfoMixin, CreateView):

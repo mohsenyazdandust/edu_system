@@ -65,7 +65,7 @@
                             <div class="mb-3">
                                 <label for="name" class="form-label">نام و نام
                                     خانوادگی :</label>
-                                <input name="first_name" class="form-control "
+                                <input required name="first_name" class="form-control "
                                     id="name"
                                     placeholder="نام و نام خانوادگی را وارد کنید"
                                     value="{% if cuser %}{{ cuser.get_full_name }}{% endif %}">
@@ -73,19 +73,19 @@
                             <div class="mb-3">
                                 <label for="username" class="form-label">نام کاربری
                                     :</label>
-                                <input name="username" class="form-control "
+                                <input required name="username" class="form-control "
                                     id="username"
                                     placeholder="نام کاربری را وارد کنید"
                                     value="{% if cuser %}{{ cuser.username }}{% endif %}">
                             </div>
 
                             <div class="mb-3">
-                                <label for="access_level" class="form-label">سطح کاربری
+                                <label required for="access_level" class="form-label">سطح کاربری
                                     :</label>
                                 <select class="form-select"
                                     aria-label="Default select example"
-                                    name="access_level">
-                                    <option {% if not cuser %}selected{% endif %}>انتخاب کنید</option>
+                                    name="access_level" required>
+                                    <option disabled>انتخاب کنید</option>
                                     <option value="1" {% if cuser and cuser.access_level == 1 %}selected{% endif %}>مسئول آموزش کل</option>
                                     <option value="2" {% if cuser and cuser.access_level == 2 %}selected{% endif %}>رئیس دانشکده</option>
                                 </select>
@@ -95,8 +95,8 @@
                                     :</label>
                                 <select class="form-select"
                                     aria-label="Default select example"
-                                    name="college">
-                                    <option selected>انتخاب کنید</option>
+                                    name="college" required>
+                                    <option disabled>انتخاب کنید</option>
                                     {% for college in colleges %}
                                         <option value="{{ college.id }}" {% if cuser.college.id == college.id %}selected{% endif %} >{{ college.title }}</option>
                                     {% endfor %}
@@ -107,8 +107,8 @@
                                     :</label>
                                 <select class="form-select"
                                     aria-label="Default select example"
-                                    name="cgroup">
-                                    <option selected>انتخاب کنید</option>
+                                    name="cgroup" required>
+                                    <option disabled>انتخاب کنید</option>
                                     {% for group in groups %}
                                         <option value="{{ group.id }}" {% if cuser.cgroup.id == group.id %}selected{% endif %}>{{ group.title }}</option>
                                     {% endfor %}
