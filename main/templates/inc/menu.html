@@ -44,6 +44,33 @@
         </li>
         {% endif %}
 
+        
+        {% if user.access_level <= 0 %}
+        <li class="mb-1">
+            <button
+                class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                data-bs-toggle="collapse"
+                data-bs-target="#eg-collapse"
+                aria-expanded="false">
+                <i class="bi bi-mortarboard ms-1"></i>
+                گروه های آموزشی
+            </button>
+            <div class="collapse" id="eg-collapse">
+                <ul
+                    class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="{% url 'main:groups' %}"
+                            class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                class="bi bi-chevron-left"></i>همه</a>
+                    </li>
+                    <li><a href="{% url 'main:add_group' %}"
+                            class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                class="bi bi-chevron-left"></i>ایجاد</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+
         {% if user.access_level <= 0 %}
         <li class="mb-1">
             <button
@@ -69,7 +96,7 @@
             </div>
         </li>
         {% endif %}
-
+        
         {% if user.access_level <= 1 %}
         <li class="mb-1">
             <button
@@ -88,6 +115,60 @@
                                 class="bi bi-chevron-left"></i>همه</a>
                     </li>
                     <li><a href="{% url 'main:add_term' %}"
+                            class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                class="bi bi-chevron-left"></i>ایجاد</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+
+        {% if user.access_level <= 1 %}
+        <li class="mb-1">
+            <button
+                class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                data-bs-toggle="collapse"
+                data-bs-target="#time-periods-collapse"
+                aria-expanded="false">
+                <i class="bi bi-clock ms-1"></i>
+                زمان بندی
+            </button>
+            <div class="collapse" id="time-periods-collapse">
+                <ul
+                    class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="{% url 'main:times' %}"
+                            class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                class="bi bi-chevron-left"></i>همه</a>
+                    </li>
+                    {% if user.access_level <= 1 %}
+                    <li><a href="{% url 'main:add_time' %}"
+                            class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                class="bi bi-chevron-left"></i>ایجاد</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+        
+        {% if user.access_level <= 1 %}
+        <li class="mb-1">
+            <button
+                class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
+                data-bs-toggle="collapse"
+                data-bs-target="#entries-collapse"
+                aria-expanded="false">
+                <i class="bi bi-calendar-date ms-1"></i>
+                ورودی ها
+            </button>
+            <div class="collapse" id="entries-collapse">
+                <ul
+                    class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="{% url 'main:entries' %}"
+                            class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
+                                class="bi bi-chevron-left"></i>همه</a>
+                    </li>
+                    <li><a href="{% url 'main:add_entry' %}"
                             class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
                                 class="bi bi-chevron-left"></i>ایجاد</a>
                     </li>
@@ -144,82 +225,7 @@
             </div>
         </li>
 
-        <li class="mb-1">
-            <button
-                class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
-                data-bs-toggle="collapse"
-                data-bs-target="#time-periods-collapse"
-                aria-expanded="false">
-                <i class="bi bi-clock ms-1"></i>
-                زمان بندی
-            </button>
-            <div class="collapse" id="time-periods-collapse">
-                <ul
-                    class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="{% url 'main:times' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
-                                class="bi bi-chevron-left"></i>همه</a>
-                    </li>
-                    {% if user.access_level <= 1 %}
-                    <li><a href="{% url 'main:add_time' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
-                                class="bi bi-chevron-left"></i>ایجاد</a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </li>
-
-        {% if user.access_level <= 1 %}
-        <li class="mb-1">
-            <button
-                class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
-                data-bs-toggle="collapse"
-                data-bs-target="#eg-collapse"
-                aria-expanded="false">
-                <i class="bi bi-mortarboard ms-1"></i>
-                گروه های آموزشی
-            </button>
-            <div class="collapse" id="eg-collapse">
-                <ul
-                    class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="{% url 'main:groups' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
-                                class="bi bi-chevron-left"></i>همه</a>
-                    </li>
-                    <li><a href="{% url 'main:add_group' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
-                                class="bi bi-chevron-left"></i>ایجاد</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        {% endif %}
-        
-        <li class="mb-1">
-            <button
-                class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
-                data-bs-toggle="collapse"
-                data-bs-target="#entries-collapse"
-                aria-expanded="false">
-                <i class="bi bi-calendar-date ms-1"></i>
-                ورودی ها
-            </button>
-            <div class="collapse" id="entries-collapse">
-                <ul
-                    class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="{% url 'main:entries' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
-                                class="bi bi-chevron-left"></i>همه</a>
-                    </li>
-                    <li><a href="{% url 'main:add_entry' %}"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded text-white my-2"><i
-                                class="bi bi-chevron-left"></i>ایجاد</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-
+        {% if user.access_level != 1  %}
         <li class="mb-1">
             <button
                 class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed text-white"
@@ -271,6 +277,7 @@
                 </ul>
             </div>
         </li>
+        {% endif %}
 
         <li class="mb-1">
             <a href="{% url 'main:schedule' %}"
