@@ -20,14 +20,18 @@ class CUser(AbstractUser):
     cgroup = models.ForeignKey('main.Group', on_delete=models.SET_NULL, null=True, blank=True)
     college = models.ForeignKey('main.College', on_delete=models.SET_NULL, null=True, blank=True)
 
+
 class Course(models.Model):
     name = models.CharField(max_length=100)
     code = models.CharField(max_length=100)
-    group = models.CharField(max_length=100)
+    linked_group = models.ForeignKey('main.Group', on_delete=models.SET_NULL, null=True, blank=True, related_name="courses")
+    
     
 
 class Teacher(models.Model):
     name = models.CharField(max_length=100)
+    linked_group = models.ForeignKey('main.Group', on_delete=models.SET_NULL, null=True, blank=True, related_name="teachers")
+    
     
     
 class College(models.Model):

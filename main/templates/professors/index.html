@@ -50,6 +50,11 @@
             </div>
             <div class="card col-11 col-md-9 mx-auto shadow px-0"
                 style="border-radius: 50px; overflow: hidden;">
+                {% if not active_info.group %}
+                <div class="alert alert-danger text-center" role="alert">
+                     ابتدا موردی از اطلاعات نوار بالا را  انتخاب کنید!
+                </div>
+                {% else %}
                 <div class="card-header px-4 text-bg-primary">
                     همه اساتید </div>
                 <div class="card-body bg-primary-subtle">
@@ -137,6 +142,7 @@
                 <div class="card-footer text-bg-primary" dir="ltr">
 
                 </div>
+            {% endif %}
             </div>
 
         </main>

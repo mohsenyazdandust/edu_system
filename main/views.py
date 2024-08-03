@@ -318,11 +318,29 @@ class TeacherListView(GetLinkInfoMixin, ListView):
     context_object_name = "teachers"
     template_name = "professors/index.html"
 
-
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        context = self.get_context_data()
+        try:
+            queryset = queryset.filter(linked_group=context['active_info']['group'])
+        except:
+            queryset = []
+            
+        return queryset
+    
+    
 class CreateTeacherView(GetLinkInfoMixin, CreateView):
     model = models.Teacher    
     template_name = 'professors/create.html'
     form_class = CreateTeacherForm
+    
+    def form_valid(self, form):
+        context = self.get_context_data()
+        form.instance.linked_group = context['active_info']['group']
+        
+        return super().form_valid(form)
+    
     
     def get_success_url(self):
         return reverse_lazy('main:teachers') 

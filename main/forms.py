@@ -40,7 +40,7 @@ class CreateGroupForm(forms.ModelForm):
 class CreateCourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ['name', 'code', 'group']
+        fields = ['name', 'code',]
 
 
 class CreateTeacherForm(forms.ModelForm):
