@@ -514,10 +514,14 @@ class ClassListView(GetLinkInfoMixin, View):
         context["courses"] = models.Course.objects.all()
         context["entries"] = models.Entry.objects.all()
         classes = models.Class.objects.all()
-        if context['active_info']['term'] and context['active_info']['college']:
-            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college'])
+        if context['active_info']['term'] and context['active_info']['college'] and context['active_info']['group']:
+            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college']).filter(group=context['active_info']['group'])
+            context["teachers"] = context["teachers"].filter(linked_group=context['active_info']['group'])
+            context["courses"] = context["courses"].filter(linked_group=context['active_info']['group'])
         else:
             context['classes'] = False
+            context["courses"] = []
+            context["teachers"] = []
 
         return context
     
@@ -528,6 +532,7 @@ class ClassListView(GetLinkInfoMixin, View):
         context = self.get_context_data(**kwargs)
         linked_term = context['active_info']['term']
         linked_college = context['active_info']['college']
+        linked_group = context['active_info']['group']
 
         for i in range(5):
             for time in context['times']:
@@ -537,11 +542,11 @@ class ClassListView(GetLinkInfoMixin, View):
                         time=time,
                         linked_term=linked_term,
                         linked_college=linked_college,
+                        group=linked_group,
                     )
                     old_class.course_id = request.POST.get(f'course[{i}-{time.id}]')
                     old_class.teacher_id = request.POST.get(f'teacher[{i}-{time.id}]')
                     old_class.stat = request.POST.get(f'stat[{i}-{time.id}]')
-                    old_class.group_id = request.POST.get(f'group[{i}-{time.id}]')
                     old_class.entry_id = request.POST.get(f'entry[{i}-{time.id}]')
                     old_class.save()
                 except:
