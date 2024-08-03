@@ -90,24 +90,24 @@
                                     <option value="2" {% if cuser and cuser.access_level == 2 %}selected{% endif %}>رئیس دانشکده</option>
                                 </select>
                             </div>
-                            <div class="mb-3 div-college" {% if not (cuser and cuser.access_level == 2) %}style="display: none;"{% endif %}>
+                            <div class="mb-3 div-college" {% if not cuser or cuser.access_level == 1 %}style="display: none;"{% endif %}>
                                 <label for="name" class="form-label">دانشکده
                                     :</label>
                                 <select class="form-select"
                                     aria-label="Default select example"
-                                    name="college" required {% if not (cuser and cuser.access_level == 2) %}disabled{% endif %}>
+                                    name="college" required {% if not cuser or cuser.access_level == 1 %}disabled{% endif %}>
                                     <option disabled>انتخاب کنید</option>
                                     {% for college in colleges %}
                                         <option value="{{ college.id }}" {% if cuser.college.id == college.id %}selected{% endif %} >{{ college.title }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="mb-3 div-college" {% if not (cuser and cuser.access_level == 2) %}style="display: none;"{% endif %}>
+                            <div class="mb-3 div-college" {% if not cuser or cuser.access_level == 1 %}style="display: none;"{% endif %}>
                                 <label for="name" class="form-label">گروه
                                     :</label>
                                 <select class="form-select"
                                     aria-label="Default select example"
-                                    name="cgroup" required {% if not (cuser and cuser.access_level == 2) %}disabled{% endif %}>
+                                    name="cgroup" required {% if not cuser or cuser.access_level == 1 %}disabled{% endif %}>
                                     <option disabled>انتخاب کنید</option>
                                     {% for group in groups %}
                                         <option value="{{ group.id }}" {% if cuser.cgroup.id == group.id %}selected{% endif %}>{{ group.title }}</option>
