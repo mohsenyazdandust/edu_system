@@ -123,13 +123,16 @@ class DashboardView(GetLinkInfoMixin, TemplateView):
         classes = models.Class.objects.all()
         if context['active_info']['term'] and context['active_info']['college'] and context['active_info']['group']:
             context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college']).filter(group=context['active_info']['group'])
+        else:
+            context['classes'] = []
+            
+        if context['active_info']['group']:
             context["teachers"] = context["teachers"].filter(linked_group=context['active_info']['group'])
             context["courses"] = context["courses"].filter(linked_group=context['active_info']['group'])
         else:
-            context['classes'] = []
             context["courses"] = []
             context["teachers"] = []
-
+        
         context['classes'] = len(context['classes'])
         context["courses"] = len(context["courses"])
         context["teachers"] = len(context['teachers'])
