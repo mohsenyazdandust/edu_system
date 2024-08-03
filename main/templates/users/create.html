@@ -90,24 +90,24 @@
                                     <option value="2" {% if cuser and cuser.access_level == 2 %}selected{% endif %}>رئیس دانشکده</option>
                                 </select>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 div-college" {% if cuser and cuser.access_level == 1 %}style="display: none;"{% endif %}>
                                 <label for="name" class="form-label">دانشکده
                                     :</label>
                                 <select class="form-select"
                                     aria-label="Default select example"
-                                    name="college" required>
+                                    name="college" required {% if cuser and cuser.access_level == 1 %}disabled{% endif %}>
                                     <option disabled>انتخاب کنید</option>
                                     {% for college in colleges %}
                                         <option value="{{ college.id }}" {% if cuser.college.id == college.id %}selected{% endif %} >{{ college.title }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 div-college" {% if cuser and cuser.access_level == 1 %}style="display: none;"{% endif %}>
                                 <label for="name" class="form-label">گروه
                                     :</label>
                                 <select class="form-select"
                                     aria-label="Default select example"
-                                    name="cgroup" required>
+                                    name="cgroup" required {% if cuser and cuser.access_level == 1 %}disabled{% endif %}>
                                     <option disabled>انتخاب کنید</option>
                                     {% for group in groups %}
                                         <option value="{{ group.id }}" {% if cuser.cgroup.id == group.id %}selected{% endif %}>{{ group.title }}</option>
@@ -126,5 +126,18 @@
     </div>
 
 </body>
+<script>
+    $("select[name=access_level]").change(function() {
+        if ($(this).val() == '1') {
+            $(".div-college").hide();
+            $("select[name=cgroup]").prop("disabled", true);
+            $("select[name=college]").prop("disabled", true); 
+        } else {
+            $(".div-college").show();
+            $("select[name=cgroup]").prop("disabled", false);
+            $("select[name=college]").prop("disabled", false); 
+        }
 
+    });
+</script>
 </html>
