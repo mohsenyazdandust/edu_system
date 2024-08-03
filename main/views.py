@@ -458,10 +458,14 @@ class CreateClassView(GetLinkInfoMixin, View):
         context["courses"] = models.Course.objects.all()
         context["entries"] = models.Entry.objects.all()
         classes = models.Class.objects.all()
-        if context['active_info']['term'] and context['active_info']['college']:
-            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college'])
+        if context['active_info']['term'] and context['active_info']['college'] and context['active_info']['group']:
+            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college']).filter(group=context['active_info']['group'])
+            context["teachers"] = context["teachers"].filter(linked_group=context['active_info']['group'])
+            context["courses"] = context["courses"].filter(linked_group=context['active_info']['group'])
         else:
             context['classes'] = False
+            context["courses"] = []
+            context["teachers"] = []
         
         return context
     
@@ -472,6 +476,7 @@ class CreateClassView(GetLinkInfoMixin, View):
         context = self.get_context_data(**kwargs)
         linked_term=context['active_info']['term']
         linked_college=context['active_info']['college']
+        linked_group=context['active_info']['group']
         
         for i in range(5):
             for time in context['times']:
@@ -482,7 +487,7 @@ class CreateClassView(GetLinkInfoMixin, View):
                         course_id=request.POST.get(f'course[{i}-{time.id}]'),
                         teacher_id=request.POST.get(f'teacher[{i}-{time.id}]'),
                         stat=request.POST.get(f'stat[{i}-{time.id}]'),
-                        group_id=request.POST.get(f'group[{i}-{time.id}]'),
+                        group=linked_group,
                         entry_id=request.POST.get(f'entry[{i}-{time.id}]'),
                     )
                     if linked_term:
