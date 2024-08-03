@@ -57,6 +57,16 @@ class LinkInfoView(View):
             else:
                 request.session['active_college'] = active_college
         
+        active_group = request.GET.get('group', False)
+        if active_group:
+            if int(active_group) == 0:
+                try:
+                    del request.session['active_group']
+                except:
+                    pass
+            else:
+                request.session['active_group'] = active_group
+        
         try:
             return redirect(request.META.get('HTTP_REFERER'))
         except:
@@ -668,8 +678,8 @@ class SubmitPandAView(GetLinkInfoMixin, View):
                 
                 p_and_a.stat = stat
                 p_and_a.save()
-            except Exception as e:
-                print(e)
+            except:
+                pass
             
         return redirect(reverse_lazy("main:p_and_a"))
     
