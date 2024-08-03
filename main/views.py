@@ -605,10 +605,15 @@ class DetermineClassLocationView(GetLinkInfoMixin, View):
         context["courses"] = models.Course.objects.all()
         context["entries"] = models.Entry.objects.all()
         classes = models.Class.objects.all()
-        if context['active_info']['term'] and context['active_info']['college']:
-            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college'])
+        if context['active_info']['term'] and context['active_info']['college'] and context['active_info']['group']:
+            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college']).filter(group=context['active_info']['group'])
+            context["teachers"] = context["teachers"].filter(linked_group=context['active_info']['group'])
+            context["courses"] = context["courses"].filter(linked_group=context['active_info']['group'])
         else:
             context['classes'] = False
+            context["courses"] = []
+            context["teachers"] = []
+        
         context['locations'] = models.Location.objects.all()
         return context
     
@@ -645,10 +650,14 @@ class ScheduleListView(GetLinkInfoMixin, TemplateView):
         context["courses"] = models.Course.objects.all()
         context["entries"] = models.Entry.objects.all()
         classes = models.Class.objects.all()
-        if context['active_info']['term'] and context['active_info']['college']:
-            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college'])
+        if context['active_info']['term'] and context['active_info']['college'] and context['active_info']['group']:
+            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college']).filter(group=context['active_info']['group'])
+            context["teachers"] = context["teachers"].filter(linked_group=context['active_info']['group'])
+            context["courses"] = context["courses"].filter(linked_group=context['active_info']['group'])
         else:
             context['classes'] = False
+            context["courses"] = []
+            context["teachers"] = []
         
         context["times"] = models.Timing.objects.all()
         context["locations"] = models.Location.objects.all()
@@ -661,8 +670,8 @@ class SubmitPandAView(GetLinkInfoMixin, View):
         context = super().get_context_data(**kwargs)
 
         classes = models.Class.objects.all()
-        if context['active_info']['term'] and context['active_info']['college']:
-            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college'])
+        if context['active_info']['term'] and context['active_info']['college'] and context['active_info']['group']:
+            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college']).filter(group=context['active_info']['group'])
         else:
             context['classes'] = False
         
@@ -740,10 +749,15 @@ class PandAListView(GetLinkInfoMixin, TemplateView):
         context["courses"] = models.Course.objects.all()
         context["entries"] = models.Entry.objects.all()
         classes = models.Class.objects.all()
-        if context['active_info']['term'] and context['active_info']['college']:
-            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college'])
+        
+        if context['active_info']['term'] and context['active_info']['college'] and context['active_info']['group']:
+            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college']).filter(group=context['active_info']['group'])
+            context["teachers"] = context["teachers"].filter(linked_group=context['active_info']['group'])
+            context["courses"] = context["courses"].filter(linked_group=context['active_info']['group'])
         else:
             context['classes'] = False
+            context["courses"] = []
+            context["teachers"] = []
         
         context["times"] = models.Timing.objects.all()
         context["locations"] = models.Location.objects.all()
