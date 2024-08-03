@@ -114,12 +114,25 @@ class DashboardView(GetLinkInfoMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context["classes"] = len(models.Class.objects.all())
         context["classrooms"] = len(models.Location.objects.all())
-        context["courses"] = len(models.Course.objects.all())
+        context["courses"] = models.Course.objects.all()
         context["entries"] = len(models.Entry.objects.all())
-        context["teachers"] = len(models.Teacher.objects.all())
+        context["teachers"] = models.Teacher.objects.all()
         context["groups"] = len(models.Group.objects.all())
+        
+        classes = models.Class.objects.all()
+        if context['active_info']['term'] and context['active_info']['college'] and context['active_info']['group']:
+            context['classes'] = classes.filter(linked_term=context['active_info']['term']).filter(linked_college=context['active_info']['college']).filter(group=context['active_info']['group'])
+            context["teachers"] = context["teachers"].filter(linked_group=context['active_info']['group'])
+            context["courses"] = context["courses"].filter(linked_group=context['active_info']['group'])
+        else:
+            context['classes'] = []
+            context["courses"] = []
+            context["teachers"] = []
+
+        context['classes'] = len(context['classes'])
+        context["courses"] = len(context["courses"])
+        context["teachers"] = len(context['teachers'])
         
         return context
 
