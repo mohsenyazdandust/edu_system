@@ -47,6 +47,11 @@
             </div>
             <div class="card col-11 col-md-9 mx-auto shadow px-0"
                 style="border-radius: 50px; overflow: hidden;">
+                {% if not active_info.group %}
+                <div class="alert alert-danger text-center" role="alert">
+                     ابتدا موردی از اطلاعات نوار بالا را  انتخاب کنید!
+                </div>
+                {% else %}
                 <div class="card-header px-4 text-bg-primary">
                     همه دروس </div>
                 <div class="card-body bg-primary-subtle">
@@ -63,8 +68,6 @@
                                     <th class="fw-normal text-center align-middle"
                                         scope="col">کد</th>
                                     <th class="fw-normal text-center align-middle"
-                                        scope="col">گروه</th>
-                                    <th class="fw-normal text-center align-middle"
                                         scope="col">عملیات</th>
                                 </tr>
                             </thead>
@@ -80,10 +83,6 @@
                                     <td
                                         class="fw-normal text-center align-middle">
                                     {{ course.code }}    
-                                    </td>
-                                    <td
-                                        class="fw-normal text-center align-middle">
-                                    {{ course.group }}
                                     </td>
                                     <td
                                         class="fw-normal text-center text-nowrap align-middle">
@@ -146,6 +145,7 @@
                 <div class="card-footer text-bg-primary" dir="ltr">
 
                 </div>
+                {% endif %}
             </div>
 
         </main>

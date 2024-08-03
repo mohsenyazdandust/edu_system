@@ -284,12 +284,30 @@ class CourseListView(GetLinkInfoMixin, ListView):
     model = models.Course
     context_object_name = "courses"
     template_name = "lessons/index.html"
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        
+        context = self.get_context_data()
+        try:
+            queryset = queryset.filter(linked_group=context['active_info']['group'])
+        except:
+            queryset = []
+            
+        return queryset
+    
 
 
 class CreateCourseView(GetLinkInfoMixin, CreateView):
     model = models.Course    
     template_name = 'lessons/create.html'
     form_class = CreateCourseForm
+    
+    def form_valid(self, form):
+        context = self.get_context_data()
+        form.instance.linked_group = context['active_info']['group']
+        
+        return super().form_valid(form)
     
     def get_success_url(self):
         return reverse_lazy('main:courses') 
